@@ -31,7 +31,9 @@ export default {
       this.result = this.operand1 - this.operand2
     },
     Divide () {
-      this.result = this.operand1 / this.operand2
+      if (this.operand2 !== 0) {
+        this.result = this.operand1 / this.operand2
+      } else this.result = 'Ошибка: На ноль делить нельзя'
     },
     Multiply () {
       this.result = this.operand1 * this.operand2
@@ -40,7 +42,9 @@ export default {
       this.result = this.operand1 ** this.operand2
     },
     IntegerDivision () {
-      this.result = Math.floor(this.operand1 / this.operand2)
+      if (this.operand2 !== 0) {
+        this.result = Math.floor(this.operand1 / this.operand2)
+      } else this.result = 'Ошибка: На ноль делить нельзя'
     }
   }
 }
