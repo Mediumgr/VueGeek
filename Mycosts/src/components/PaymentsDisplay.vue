@@ -15,7 +15,7 @@
         </div>
       </div>
      <div v-for="(item, idx) in list" :key="idx" class="elements">
-         <div class="idx">{{idx + 1}} </div>
+         <div class="idx">{{item.id}} </div>
          <div class="element">{{ item.date }} </div>
          <div class="element category">{{ item.category }} </div>
          <div class="element">{{ item.value }}</div>

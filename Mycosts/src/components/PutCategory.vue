@@ -1,7 +1,7 @@
 <template>
   <div class="block">
       Add to form: <input type="text" v-model="add" class="add">
-      <button class="button" @click="addToForm()">Add</button>
+      <button class="button" @click="addToForm">Add</button>
   </div>
 </template>
 
@@ -10,13 +10,14 @@ export default {
     name: "PutCategory",
     data(){
         return {
-            add: ''
+            add:'',
         }
     },
     methods: {
         addToForm() {
             if (this.add){
                 this.$store.commit('addDataToForm', this.add)
+                this.add = ''
             }
         }
     }
@@ -43,8 +44,8 @@ export default {
 }
 
 .button {
-    height: 23px;
-    width: 55px;
+    height: 26px;
+    width: 85px;
     border: none;
     outline: none;
     background: rgb(230, 2, 199);

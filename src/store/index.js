@@ -7,17 +7,19 @@ export default new Vuex.Store({
     state: {
         paymentsList: [],
         categoryList: [],
-        selectOption: ''
+        selectOption: '',
+        currentPage: 1,
+        displayedItems: 3
+     /*    filtered: [] */
     },
 
     mutations: {
         setPaymentListData(state, payload) {
             state.paymentsList = payload
         },
-
         addDataToPaymentsList(state, payload) {
             state.paymentsList.push(payload)
-
+          /*   state.filtered.push(payload) */
         },
         setCategoryList(state, payload) {
             state.categoryList = payload
@@ -27,6 +29,12 @@ export default new Vuex.Store({
         },
         addDataToForm(state, payload) {
             state.categoryList.push(payload)
+        },
+/*         paymentListWithFetchData(state, payload) {
+            state.paymentsList = [...payload, ...state.filtered]
+        } */
+        paginate(state, payload) {
+            state.currentPage = payload
         }
     },
 
@@ -40,7 +48,7 @@ export default new Vuex.Store({
                         "id": 1,
                         "date": "20.03.2020",
                         "category": "Food",
-                        "value": 169
+                        "value": 171
                     }, {
                         "id": 2,
                         "date": "21.03.2020",
@@ -73,8 +81,8 @@ export default new Vuex.Store({
                 commit('setPaymentListData', res)
             })
         },
-        fetchData({
-            commit
+        /* fetchData({
+            commit, 
         }, payload) {
             return new Promise((resolve) => {
                 setTimeout(() => {
@@ -83,7 +91,7 @@ export default new Vuex.Store({
                             "id": 1,
                             "date": "20.03.2020",
                             "category": "Food",
-                            "value": 169
+                            "value": 171
                         }, {
                             "id": 2,
                             "date": "21.03.2020",
@@ -116,16 +124,16 @@ export default new Vuex.Store({
                     resolve(displayPage)
                 }, payload.timeoutDelay)
             }).then(displayPage => {
-                commit('setPaymentListData', displayPage)
+                commit('paymentListWithFetchData', displayPage)
             })
-        },
+        }, */
         fetchCategory({
             commit
         }) {
             return new Promise((resolve) => {
                 setTimeout(() => {
-                    resolve(['Food', 'Sport', 'Education', 'Auto', 'Health', 'Family'])
-                }, 1000)
+                    resolve(['Food', 'Sport', 'Education', 'Transport', 'Health', 'Family', 'Entertainment'])
+                }, 100)
             }).then(res => {
                 commit('setCategoryList', res)
             })
@@ -136,9 +144,16 @@ export default new Vuex.Store({
         getPaymentList: state => state.paymentsList,
 
         getFullPyamentValue: state => {
-            return state.paymentsList.reduce((res, cur) => res + cur.value, 0)
+            return state.paymentsList.reduce((result, current) => result + current.value, 0)
         },
+
         getCategoryList: state => state.categoryList,
-        addSelectedToList: state => state.selectOption
+
+        addSelectedToList: state => state.selectOption,
+
+        paginatePages: state => state.currentPage,
+
+        displayedPage: state => state.displayedItems
+
     }
 })
