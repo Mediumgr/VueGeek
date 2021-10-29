@@ -6,7 +6,7 @@
       <category-select :categories="categories" />
       <put-category /> 
     </div>
-    <payments-display :list="currentElements" :total="getFPV"/>
+    <payments-display :length="paymentsList.length" :list="currentElements" :total="getFPV"/>
     <pages-pagination :displayedItems="displayedItems" :length="paymentsList.length" :currentPage="currentPage"/>
   </div>
 </template>

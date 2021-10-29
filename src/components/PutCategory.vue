@@ -6,6 +6,9 @@
 </template>
 
 <script>
+/* import { mapActions }  для теста testPutCategory (см. method ниже)*/
+import { mapActions } from 'vuex'
+
 export default {
     name: "PutCategory",
     data(){
@@ -16,10 +19,16 @@ export default {
     methods: {
         addToForm() {
             if (this.add){
+                console.log('ХУЙ')
                 this.$store.commit('addDataToForm', this.add)
                 this.add = ''
             }
-        }
+            //для теста testPutCategory.test.js
+            let data = this.add
+            this.addForTest(data) 
+        },
+        //для теста testPutCategory.test.js
+        ...mapActions(['addForTest']),
     }
 }
 </script>

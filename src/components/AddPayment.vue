@@ -1,20 +1,24 @@
 <template>
   <div>
       <div class="add">
-        <button @click="hide=!hide" class="button">Add<span class="cross">+</span></button>
+        <button @click="hide=!hide" class="button">{{hide === true? 'Hide' : 'Add'}}<span class="cross">{{hide === true? '-' : '+'}}</span></button>
       </div>
         <transition name="fade">
         <div v-show="hide" class="display">
-            <input v-model="date" placeholder="date" class="input"/>
-            <input v-model.trim="category" placeholder="category" class="input"/>
-            <input v-model.number="value" type="number" placeholder="value" class="input"/>
-            <button @click="onClick(); changeDataItem()" class="button" :disabled="!category || !value">Add Data</button>
+            <input v-model="date" name="testJest" placeholder="date" class="input"/>
+            <input v-model.trim="category" name="testJest2" placeholder="category" class="input"/>
+            <input v-model.number="value" name="testJest3" type="number" placeholder="value" class="input"/>
+            <button @click="onClick()" class="button testBtn" :disabled="!category || !value">{{message}}</button>
+            <div class="text">{{text}}</div>
         </div>
       </transition>
   </div>
 </template>
 
 <script>
+/* import { mapActions }  для теста (см. method ниже)*/
+import { mapActions } from 'vuex'
+
 export default {
     name: "AddPayment",
     props: {
@@ -23,11 +27,13 @@ export default {
     },
     data() {
         return {
+            message: 'Add Data',
             date: "",
             category: '',
             value: null,
             hide: false,
-            id: 0
+            id: 0,
+            text: ''
         }
     },
     methods: {
@@ -39,21 +45,36 @@ export default {
                 value: this.value,
                 id: ++idNum
             }
-            if (data.category !== undefined) {
+
+            if (data.category !== undefined && data.value >= 0) {
+                this.message = 'Added'
+                this.text = ''
                 this.$store.commit('addDataToPaymentsList', data)
+                setTimeout(() => {
+                    this.message = 'Add'
+                }, 3500);
+            } else {
+                this.text = "Вы ввели недопустимое значение стоимости затрат.."
             }
-        },
-        changeDataItem() {
-            const data = {
+            //ModalWindow property:
+            if (this.$attrs.property) {
+                const data = {
                 date: this.date,
                 category: this.category,
                 value: this.value,
                 id: this.$attrs.property.editedItem.id
             }
-            this.$store.commit('changeDataItemPaymentsList', data)
-            this.$modal.hide()
-            this.$router.push({name: 'Dashboard'})
-        }
+                this.$store.commit('changeDataItemPaymentsList', data)
+                this.$modal.hide()
+                this.$router.push({name: 'Dashboard'})
+            }
+
+            /* для теста testVuex.test.js при клике*/
+            const someData = this.data
+            this.addData(someData)
+        },
+        /* для теста testVuex.test.js*/
+        ...mapActions(['addData']),
     },
     computed: {
         getCurrentDate() {
@@ -121,6 +142,11 @@ export default {
 
 .cross {
     padding: 0 0 0 15px;
+}
+
+.text {
+    width: 400px;
+    background: #ccc;
 }
 
 .fade-enter-active, .fade-leave-active {

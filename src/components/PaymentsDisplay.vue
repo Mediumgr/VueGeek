@@ -16,7 +16,7 @@
         <div class="div"></div>
       </div>
       <transition-group name="animation" tag="div">
-        <div v-for="(item, index) in list" :key="index" class='elements'>
+        <div v-for="item in list" :key="item.id" class='elements'>
             <div class="idx">{{item.id}} </div>
             <div class="element">{{ item.date }} </div>
             <div class="element category">{{ item.category }} </div>
@@ -26,7 +26,7 @@
             </div>
         </div>
         </transition-group>
-        <div class="emptyEelements" v-if="!list.length">Список пуст</div>
+        <div class="emptyEelements" v-if="length === 0">Список пуст</div>
      <div class="total-block">
          <div class="total">Total: {{total}}</div>
      </div>
@@ -37,6 +37,10 @@
 export default {
     name: "PaymentsDisplay",
     props: {
+        length: {
+            type: Number,
+            default: 0
+        }, 
         list: {
             type: Array,
             default: ()=>[] 
@@ -48,8 +52,9 @@ export default {
     methods: {
         contextMenuClick(event, item) { 
             const items = [
-                { text: "Edit", src: 'edit.svg', action: () => {this.actionEdit(item)}},
-                { text: "Delete", src: 'trash.svg', action: () => {this.actionDelete(item)}}
+                { text: "Edit", src: 'edit.svg', action: function () {this.actionEdit(item)}.bind(this)},
+                //можно так: function () {this.actionEdit(item)}.bind(this) или так action: () => this.actionEdit(item)
+                { text: "Delete", src: 'trash.svg', action: () => this.actionDelete(item)}
             ];
             this.$context.show({event,items});
         },
@@ -59,7 +64,15 @@ export default {
         actionDelete(item) {
             this.$store.commit('deletItem', item)
             this.$context.close()
-        },
+        }
+    },
+    watch: {
+        length() {
+            if (this.length === 3) {
+                this.$router.push({name: 'PagesPagination', params: {id: 1}})
+                this.$store.commit('paginate', 1)//переход к первой странице
+            }    
+        }
     }
 };  
 </script>
