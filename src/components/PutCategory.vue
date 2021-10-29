@@ -19,7 +19,6 @@ export default {
     methods: {
         addToForm() {
             if (this.add){
-                console.log('ХУЙ')
                 this.$store.commit('addDataToForm', this.add)
                 this.add = ''
             }
