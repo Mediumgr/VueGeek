@@ -1,98 +1,144 @@
 <template>
+  <!--   <v-container class="payments-list">
+    <v-row class="title">
+      <v-col :cols="1" class="titleId">#</v-col>
+      <v-col :cols="4" class="titleDate">Date</v-col>
+      <v-col :cols="5" class="titleCategory">Category</v-col>
+      <v-col :cols="1" class="titleValue">Value</v-col>
+      <v-col :cols="1" class="div"></v-col>
+    </v-row>
+    <transition-group name="animation" tag="div">
+      <v-row v-for="item in list" :key="item.id" class="elements">
+        <v-col :cols="1" class="idx">{{ item.id }}</v-col>
+        <v-col :cols="4" class="element">{{ item.date }}</v-col>
+        <v-col :cols="5" class="element category">{{ item.category }}</v-col>
+        <v-col :cols="1" class="element">{{ item.value }}</v-col>
+        <v-col
+          :cols="1"
+          class="contextMenu"
+          @click="contextMenuClick($event, item)"
+        >
+          <img class="img" src="../assets/solid.svg" alt="..." />
+        </v-col>
+      </v-row>
+    </transition-group>
+    <v-row class="emptyEelements" v-if="length === 0">
+      <v-col :cols="12">Список пуст</v-col>
+    </v-row>
+    <v-row class="total-block">
+      <v-col :cols="12" class="total">Total: {{ total }}</v-col>
+    </v-row>
+  </v-container> -->
+
   <div class="payments-list">
-      <div class="title">
-        <div class="titleId">
-            #
-        </div>
-        <div class="titleDate">
-            Date
-        </div>
-        <div class="titleCategory">
-            Category
-        </div>
-        <div class="titleValue">
-            Value
-        </div>
-        <div class="div"></div>
+    <div class="title">
+      <div class="titleId">
+        #
       </div>
-      <transition-group name="animation" tag="div">
-        <div v-for="item in list" :key="item.id" class='elements'>
-            <div class="idx">{{item.id}} </div>
-            <div class="element">{{ item.date }} </div>
-            <div class="element category">{{ item.category }} </div>
-            <div class="element">{{ item.value }}</div>
-            <div class="contextMenu" @click="contextMenuClick($event, item)">
-                <img src="../assets/solid.svg" alt="...">
-            </div>
+      <div class="titleDate">
+        Date
+      </div>
+      <div class="titleCategory">
+        Category
+      </div>
+      <div class="titleValue">
+        Value
+      </div>
+      <div class="div"></div>
+    </div>
+    <transition-group name="animation" tag="div">
+      <div v-for="item in list" :key="item.id" class="elements">
+        <div class="idx">{{ item.id }}</div>
+        <div class="element">{{ item.date }}</div>
+        <div class="element category">{{ item.category }}</div>
+        <div class="element">{{ item.value }}</div>
+        <div class="contextMenu" @click="contextMenuClick($event, item)">
+          <img src="../assets/solid.svg" alt="..." />
         </div>
-        </transition-group>
-        <div class="emptyEelements" v-if="length === 0">Список пуст</div>
-     <div class="total-block">
-         <div class="total">Total: {{total}}</div>
-     </div>
+      </div>
+    </transition-group>
+    <div class="emptyEelements" v-if="length === 0">Список пуст</div>
+    <div class="total-block">
+      <div class="div"></div>
+      <div class="div"></div>
+      <div class="div"></div>
+      <div class="total">Total: {{ total }}</div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-    name: "PaymentsDisplay",
-    props: {
-        length: {
-            type: Number,
-            default: 0
-        }, 
-        list: {
-            type: Array,
-            default: ()=>[] 
-        }, 
-        total: {
-            type: Number
-        }
+  name: "PaymentsDisplay",
+  props: {
+    length: {
+      type: Number,
+      default: 0
     },
-    methods: {
-        contextMenuClick(event, item) { 
-            const items = [
-                { text: "Edit", src: 'edit.svg', action: function () {this.actionEdit(item)}.bind(this)},
-                //можно так: function () {this.actionEdit(item)}.bind(this) или так action: () => this.actionEdit(item)
-                { text: "Delete", src: 'trash.svg', action: () => this.actionDelete(item)}
-            ];
-            this.$context.show({event,items});
-        },
-        actionEdit(item) {
-            this.$modal.show('AddPayment',{header:"Add new data", editedItem:item})
-        },
-        actionDelete(item) {
-            this.$store.commit('deletItem', item)
-            this.$context.close()
-        }
+    list: {
+      type: Array,
+      default: () => []
     },
-    watch: {
-        length() {
-            if (this.length === 3) {
-                this.$router.push({name: 'PagesPagination', params: {id: 1}})
-                this.$store.commit('paginate', 1)//переход к первой странице
-            }    
-        }
+    total: {
+      type: Number
     }
-};  
+  },
+  methods: {
+    contextMenuClick(event, item) {
+      const items = [
+        {text: "Edit",src: "edit.svg",action: function() {this.actionEdit(item)}.bind(this)},
+        //можно так: function () {this.actionEdit(item)}.bind(this) или так action: () => this.actionEdit(item)
+        {text: "Delete",src: "trash.svg",action: () => this.actionDelete(item)}
+        ];
+      this.$context.show({ event, items });
+    },
+    actionEdit(item) {
+      this.$modal.show("AddPayment", {
+        header: "Add new data",
+        editedItem: item
+      });
+    },
+    actionDelete(item) {
+      this.$store.commit("deletItem", item);
+      this.$context.close();
+    }
+  },
+  watch: {
+    length() {
+      if (this.length % 3 === 0) {
+        let num = this.length / 3; // делим на 3, т.к. выводим по 3 элемента на каждой странице
+        this.$store.commit("paginate", num); //переход к нужной странице
+      }
+      if (this.length % 3 === 1) {
+        let num = Math.floor(this.length / 3) + 1;
+        this.$router.push({ name: "PagesPagination", params: { id: num } });
+        this.$store.commit("paginate", num); //переход к нужной странице
+      }
+    }
+  }
+};
 </script>
 
 <style scoped>
-
-.elements {
-    display: flex;
-    justify-content: space-between;    
-    padding: 20px 0 20px;
-    width: 50%;
-    border-bottom: 1px solid grey;
-    /* Для анимации c  'background: linear-gradient' */
-    position: relative;
-    background: none;
-    z-index: 10;
+.payments-list {
+  margin-left: 0;
 }
 
-.elements::before {
+.elements {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0 20px;
+  border-bottom: 1px solid grey;
+  /* для .animation-leave-active (техника FLIP) https://ru.vuejs.org/v2/guide/transitions.html*/
+  transition: all 1s;
+  /* Для анимации c  'background: linear-gradient' */
+  position: relative;
+  background: none;
+  z-index: 10;
+}
+
 /* Для анимации c  'background: linear-gradient' */
+.elements::before {
   content: "";
   display: block;
   opacity: 0;
@@ -101,88 +147,95 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, #a1ecff 35%, #40DBFF 65%, #52dfff 100%);
-  transition: opacity 0.8s ease-in-out;
+  background: linear-gradient(90deg, #a1ecff 35%, #40dbff 65%, #52dfff 100%);
+  transition: all 0.8s ease-in-out;
   z-index: -10;
 }
 
-.elements:hover::before {
 /* Для анимации c  'background: linear-gradient' */
+.elements:hover::before {
   opacity: 1;
 }
 
 .emptyEelements {
-    display: flex;
-    justify-content: center;    
-    padding: 20px 0 20px;
-    width: 50%;
-    border-bottom: 1px solid grey; 
+  display: flex;
+  justify-content: center;
+  padding: 20px 0 20px;
+  border-bottom: 1px solid grey;
 }
 
 .element {
-    text-align: start;
-    flex-basis: 20%;
+  text-align: start;
+  flex-basis: 20%;
 }
 
 .idx {
-    text-align: start;
+  text-align: start;
 }
 
 .category {
-    min-width: 55px;
+  min-width: 55px;
 }
 
 .title {
-    display: flex;
-    justify-content: space-between;    
-    padding: 20px 0 20px;
-    width: 50%;
-    border-bottom: 1px solid grey;
-    font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0 20px;
+  border-bottom: 1px solid grey;
+  font-weight: 600;
 }
 
 .div {
-    width: 4.6px;
+  width: 4.6px;
 }
 
 .titleDate {
-    flex-basis: 20%;
+  flex-basis: 20%;
 }
 
 .titleCategory {
-     flex-basis: 20%;
-     min-width: 55px;
+  flex-basis: 20%;
+  min-width: 55px;
 }
 
 .titleValue {
-    flex-basis: 20%;
+  flex-basis: 20%;
 }
 
 .total {
-    text-align: start;
-    text-transform: uppercase;
-    color: red;
-    font-size: 19px;
-
+  text-align: end;
+  text-transform: uppercase;
+  color: red;
+  font-size: 19px;
 }
 
 .total-block {
-    display: flex;
-    justify-content: flex-end; 
-    padding: 20px 0 20px;
-    width: 50%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 0 20px;
+  width: 76%;
 }
 
 .contextMenu {
-    width: 4.6px;
-    cursor: pointer;
+  width: 4.6px;
+  cursor: pointer;
 }
 
-.animation-enter-active, .animation-leave-active {
-    transition: 1s all;
+.img {
+  height: 14px;
 }
 
-.animation-enter, .animation-leave-to {
-    transform: translateX(-50px);
+.animation-enter-active {
+  transition: all 1.3s;
+}
+
+.animation-enter,
+.animation-leave-to {
+  opacity: 0;
+  transform: scale(0.4);
+}
+/* FLIP animation */
+.animation-leave-active {
+  position: absolute;
 }
 </style>

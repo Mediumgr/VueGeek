@@ -1,50 +1,53 @@
 <template>
   <div class="wrapper">
-   <button class="close" @click='close'>close</button> 
+    <button class="close" @click="close">close</button>
     <div class="header">{{ settings.header }}</div>
     <div class="content">
-          <component :is="settings.name" :property="settings"/>
+      <component :is="settings.name" :property="settings" />
     </div>
   </div>
 </template>
-
 <script>
 import AddPayment from "./AddPayment.vue";
 
 export default {
   components: { AddPayment },
   props: {
-    settings: Object,
+    settings: Object
   },
   methods: {
-    close(){
-      this.$modal.hide()
-      this.$router.push({name: 'Dashboard'})
+    close() {
+      this.$modal.hide();
+      this.$router.push({ name: "Dashboard" });
     }
   },
   created() {
-    this.$router.push({name: 'AddPaymentOpen', query: { data: 'edit' }})
-    },
+    this.$router.push({ name: "AddPaymentOpen", query: { data: "edit" } });
+  }
 };
 </script>
 
 <style scoped lang="scss">
 .wrapper {
-    width: 34%;
-    padding: 20px;
-    position: absolute;
-    top: 211px;
-    background: #62a0bd;
-    z-index: 20;
+  width: 45%;
+  padding: 20px;
+  background: #62a0bd;
+  z-index: 200;
+  position: fixed;
+  top: 210px;
+  left: 0px;
+  margin-left: 28px;
 }
 
 .close {
-    background: rgb(230, 2, 199);
-    color: white;
-    position: absolute;
-    right: 21px;
-    transition: 1.5s;
-    cursor: pointer
+  background: rgb(230, 2, 199);
+  color: white;
+  position: absolute;
+  right: 21px;
+  transition: 1.5s;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 10%;
 }
 
 .close:hover {
