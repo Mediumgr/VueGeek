@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="app" v-show="showIt" :class="[substrate ? styleActive : '']">
+    <div id="app" v-if="showIt" :class="[substrate ? styleActive : '']">
       <header>
         <transition appear name="fadeName">
           <h1>My personal cost</h1>
@@ -19,7 +19,7 @@
         <modal-window v-if="modalSettings.name" :settings="modalSettings" />
       </transition>
     </div>
-    <page404 v-show="showPage404" />
+    <page404 v-else-if="showPage404" />
   </div>
 </template>
 

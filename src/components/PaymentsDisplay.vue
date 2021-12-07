@@ -1,35 +1,4 @@
 <template>
-  <!--   <v-container class="payments-list">
-    <v-row class="title">
-      <v-col :cols="1" class="titleId">#</v-col>
-      <v-col :cols="4" class="titleDate">Date</v-col>
-      <v-col :cols="5" class="titleCategory">Category</v-col>
-      <v-col :cols="1" class="titleValue">Value</v-col>
-      <v-col :cols="1" class="div"></v-col>
-    </v-row>
-    <transition-group name="animation" tag="div">
-      <v-row v-for="item in list" :key="item.id" class="elements">
-        <v-col :cols="1" class="idx">{{ item.id }}</v-col>
-        <v-col :cols="4" class="element">{{ item.date }}</v-col>
-        <v-col :cols="5" class="element category">{{ item.category }}</v-col>
-        <v-col :cols="1" class="element">{{ item.value }}</v-col>
-        <v-col
-          :cols="1"
-          class="contextMenu"
-          @click="contextMenuClick($event, item)"
-        >
-          <img class="img" src="../assets/solid.svg" alt="..." />
-        </v-col>
-      </v-row>
-    </transition-group>
-    <v-row class="emptyEelements" v-if="length === 0">
-      <v-col :cols="12">Список пуст</v-col>
-    </v-row>
-    <v-row class="total-block">
-      <v-col :cols="12" class="total">Total: {{ total }}</v-col>
-    </v-row>
-  </v-container> -->
-
   <div class="payments-list">
     <div class="title">
       <div class="titleId">

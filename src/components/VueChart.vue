@@ -112,13 +112,11 @@ export default {
             valuesEqual = false;
           }
           if (valuesEqual) {
-            debugger
             result[index].value = current.value + comparison.value;
             duplicatesIndices.push(comparisonIndex);
           }
         }
       });
-      debugger;
       return result.map((item) => item.value);
     },
   },

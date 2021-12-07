@@ -2,10 +2,7 @@
   <div>
     <div class="add">
       <transition appear name="btn">
-        <button @click="hide = !hide" class="button">
-          {{ hide === true ? "Hide" : "Add"
-          }}<span class="cross">{{ hide === true ? "-" : "+" }}</span>
-        </button>
+        <button @click="hide = !hide" class="button">{{ hide === true ? "Hide" : "Add"}}<span class="cross">{{ hide === true ? "-" : "+" }}</span></button>
       </transition>
     </div>
     <transition appear name="fade">

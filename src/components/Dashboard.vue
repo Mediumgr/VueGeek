@@ -7,7 +7,7 @@
           <category-select :categories="categories" key="CategorySelect" />
           <put-category />
         </div>
-        <payments-display :length="paymentsList.length" :list="currentElements" :total="getFPV" key="PaymentsDisplay"/>
+        <payments-display v-if="paymentsList.length" :length="paymentsList.length" :list="currentElements" :total="getFPV" key="PaymentsDisplay"/>
         <pages-pagination :displayedItems="displayedItems" :length="paymentsList.length" :currentPage="currentPage" key="PagesPagination"/>
       </transition-group>
     </div>
