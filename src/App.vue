@@ -19,7 +19,7 @@
         <modal-window v-if="modalSettings.name" :settings="modalSettings" />
       </transition>
     </div>
-    <page404 v-else-if="showPage404" />
+    <page404 v-else/>
   </div>
 </template>
 
@@ -38,15 +38,14 @@ export default {
         /* webpackChunkName: 'ContextMenu' */ "./components/ContextMenu.vue"
       ),
     Page404: () =>
-      import(/* webpackChunkName: 'Page404' */ "./components/Page404.vue")
+      import(/* webpackChunkName: 'Page404' */ "./components/Page404.vue"),
   },
   data() {
     return {
       modalSettings: {},
       showIt: true,
-      showPage404: false,
       substrate: false,
-      styleActive: "active"
+      styleActive: "active",
     };
   },
   methods: {
@@ -57,15 +56,14 @@ export default {
     onHide() {
       this.modalSettings = {};
       this.substrate = false;
-    }
+    },
   },
   watch: {
     $route(toR) {
       if (toR.name === "NotFound") {
         this.showIt = false;
-        this.showPage404 = true;
       }
-    }
+    },
   },
   mounted() {
     this.$modal.EventBus.$on("shown", this.onShown);
@@ -74,7 +72,7 @@ export default {
   beforeDestroy() {
     this.$modal.EventBus.$off("shown", this.onShown);
     this.$modal.EventBus.$off("hide", this.onHide);
-  }
+  },
 };
 </script>
 

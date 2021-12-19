@@ -66,10 +66,6 @@ export default {
   cursor: pointer;
 }
 
-.active {
-  background: rgb(230, 2, 199);
-}
-
 .button {
   border-radius: 50%;
   display: flex;

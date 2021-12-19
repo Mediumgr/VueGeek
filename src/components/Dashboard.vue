@@ -7,11 +7,11 @@
           <category-select :categories="categories" key="CategorySelect" />
           <put-category />
         </div>
-        <payments-display v-if="paymentsList.length" :length="paymentsList.length" :list="currentElements" :total="getFPV" key="PaymentsDisplay"/>
+        <payments-display :length="paymentsList.length" :list="currentElements" :total="getFPV" key="PaymentsDisplay"/>
         <pages-pagination :displayedItems="displayedItems" :length="paymentsList.length" :currentPage="currentPage" key="PagesPagination"/>
       </transition-group>
     </div>
-    <vue-chart-container :items="chart"></vue-chart-container>
+    <vue-chart-container :items="paymentsList" :categories="categories"></vue-chart-container>
   </div>
 </template>
 
@@ -69,9 +69,6 @@ export default {
       return this.paymentsList.slice(displayedItems * (currentPage - 1),displayedItems * (currentPage - 1) + displayedItems
       );
     },
-    chart() {
-      return this.$store.getters.getPaymentList
-    }
   },
   created() {
     this.$store.dispatch("fetchDataFromApp");
@@ -113,5 +110,6 @@ export default {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
-}</style
->>
+}
+
+</style>

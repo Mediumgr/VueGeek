@@ -3,24 +3,21 @@
 </div>
 
 <script>
-import { Doughnut, mixins } from "vue-chartjs";
-const { reactiveProp, reactiveData } = mixins;
+import { Doughnut } from "vue-chartjs";
 
 export default {
   name: "VueChart",
   extends: Doughnut,
-  mixins: [reactiveProp, reactiveData],
-  /*   data() {
-    return {
-      commonCategoryValue: 0
-    };
-  }, */
   props: {
     options: {
       type: Object,
       default: null,
     },
-    chartData: {
+    paymentsList: {
+      type: Array,
+      default: () => [],
+    },
+    categories: {
       type: Array,
       default: () => [],
     },
@@ -29,28 +26,37 @@ export default {
     render() {
       this.renderChart(
         {
-          labels: this.label,
+          labels: this.categories,
           datasets: [
             {
               label: "expenses by category",
-              data: this.getData,
+              data: this.categories.map((category) => {
+                return this.paymentsList.reduce((total, element) => {
+                  if (element.category === category) {
+                    total += element.value;
+                  }
+                  return total;
+                }, 0);
+              }),
               backgroundColor: [
                 "#D460CF",
                 "#F26D93",
-                "#9A6AD6",
+                "#b6d2e6",
                 "#E1FA71",
                 "#60D6A9",
                 "#FFC573",
+                "#19c9c8",
+                "#08e600",
+                "#000ce6",
+                "#b9da83",
+                "#8a5abc",
+                "#bc8e5a",
+                "#b0ff00",
+                "#ffc900",
+                "#314e01",
+                "#5e2cd7",
               ],
-              borderColor: [
-                "##4671D5",
-                "#4671D5",
-                "r#4671D5",
-                "#4671D5",
-                "#4671D5",
-                "#4671D5",
-              ],
-              borderWidth: 0.2,
+              borderWidth: 0.1,
             },
           ],
         },
@@ -64,64 +70,8 @@ export default {
   mounted() {
     this.render();
   },
-  computed: {
-    label() {
-      const result = [];
-      const duplicatesIndices = [];
-
-      this.chartData.forEach((current, index) => {
-        if (duplicatesIndices.includes(index)) return;
-
-        result.push(current);
-
-        // Сравниваем каждый элемент в массиве с последующим
-        for (
-          let comparisonIndex = index + 1;
-          comparisonIndex < this.chartData.length;
-          comparisonIndex++
-        ) {
-          const comparison = this.chartData[comparisonIndex];
-          let valuesEqual = true;
-          if (current.category !== comparison.category) {
-            valuesEqual = false;
-          }
-
-          if (valuesEqual) duplicatesIndices.push(comparisonIndex);
-        }
-      });
-      return result.map((item) => item.category);
-    },
-    getData() {
-      const result = [];
-      const duplicatesIndices = [];
-
-      this.chartData.forEach((current, index) => {
-        
-        if (duplicatesIndices.includes(index)) return;
-
-        result.push(current);
-        // Сравниваем каждый элемент в массиве с последующим
-        for (
-          let comparisonIndex = index + 1;
-          comparisonIndex < this.chartData.length;
-          comparisonIndex++
-        ) {
-          const comparison = this.chartData[comparisonIndex];
-          let valuesEqual = true;
-          if (current.category !== comparison.category) {
-            valuesEqual = false;
-          }
-          if (valuesEqual) {
-            result[index].value = current.value + comparison.value;
-            duplicatesIndices.push(comparisonIndex);
-          }
-        }
-      });
-      return result.map((item) => item.value);
-    },
-  },
   watch: {
-    chartData: {
+    paymentsList: {
       handler: "getValue",
       deep: true,
     },

@@ -26,7 +26,7 @@
         </div>
       </div>
     </transition-group>
-    <div class="emptyEelements" v-if="length === 0">Список пуст</div>
+    <div class="emptyEelements" v-if="!length">Список пуст</div>
     <div class="total-block">
       <div class="div"></div>
       <div class="div"></div>
@@ -42,7 +42,7 @@ export default {
   props: {
     length: {
       type: Number,
-      default: 0
+      default: null
     },
     list: {
       type: Array,
@@ -126,16 +126,16 @@ export default {
   opacity: 1;
 }
 
+.element {
+  text-align: start;
+  flex-basis: 20%;
+}
+
 .emptyEelements {
   display: flex;
   justify-content: center;
   padding: 20px 0 20px;
   border-bottom: 1px solid grey;
-}
-
-.element {
-  text-align: start;
-  flex-basis: 20%;
 }
 
 .idx {

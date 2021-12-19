@@ -7,30 +7,10 @@
     </div>
     <transition appear name="fade">
       <div v-show="hide" class="display">
-        <input
-          v-model="date"
-          name="testJest"
-          placeholder="date"
-          class="input"
-        />
-        <input
-          v-model.trim="category"
-          name="testJest2"
-          placeholder="category"
-          class="input"
-        />
-        <input
-          v-model.number="value"
-          name="testJest3"
-          type="number"
-          placeholder="value"
-          class="input"
-        />
-        <button
-          @click="onClick()"
-          class="button testBtn"
-          :disabled="!category || !value"
-        >
+        <input v-model="date" name="testJest" placeholder="date" class="input"/>
+        <input v-model.trim="category" name="testJest2" placeholder="category" class="input"/>
+        <input v-model.number="value" name="testJest3" type="number" placeholder="value" class="input"/>
+        <button @click="onClick()" class="button testBtn" :disabled="!category || !value">
           {{ message }}
         </button>
         <div class="text">{{ text }}</div>

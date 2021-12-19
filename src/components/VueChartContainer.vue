@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <vue-chart
-      v-if="getData.length"
-      :chartData="items"
+      :paymentsList="items"
       :options="options"
+      :categories="categories"
     />
   </div>
 </template>
@@ -21,12 +21,10 @@ export default {
     items: {
       type: Array,
       default: null
-    }
-  },
-  computed: {
-    /* для первоначального ОК рендеринга */
-    getData() {
-      return this.items;
+    },
+    categories: {
+      type: Array,
+      default: null
     }
   }
 };
