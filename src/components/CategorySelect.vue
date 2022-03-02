@@ -1,7 +1,7 @@
 <template>
   <div>
     <select v-model="selected" class="selected">
-      <option v-for="(option, idx) in categories" :key="idx">
+      <option v-for="option in categories" :key="option">
         {{ option }}
       </option>
     </select>
@@ -16,6 +16,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    categoryTransfer: {
+      type: String,
+      default: null,
+    },
   },
   data() {
     return {
@@ -27,11 +31,11 @@ export default {
       if (this.selected) {
         this.$store.commit("addSelected", this.selected);
       }
-    },
+    }
   },
   created() {
-    if (!this.selected) {
-      this.selected = this.$store.state.selectCategory;
+    if (this.categoryTransfer) {
+      this.selected = this.categoryTransfer;
     }
   },
 };
@@ -42,10 +46,11 @@ export default {
   outline: none;
 }
 .selected {
+  background-color: white;
   outline: none;
-  width: 105px;
-  height: 22px;
-  border: 1px solid grey;
+  width: 107px;
+  height: 27px;
+  border: 1px solid rgb(55, 202, 221);
   border-radius: 3px;
 }
 </style>

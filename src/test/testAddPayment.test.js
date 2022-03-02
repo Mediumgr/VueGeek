@@ -10,25 +10,17 @@ localVue.use(VueRouter)
 const router = new VueRouter()
 
 describe('AddPayment.vue', () => {
-
     const wrapper = shallowMount(AddPayment, {
         localVue,
         router
     })
-
-    it('check the cross symbol when button is going to be clicked', async () => {
-
-        const button = wrapper.find('.button')
+    it('check the cross symbol when the button is not clicked', async () => {
         const cross = wrapper.find('.cross')
-
-        button.trigger('click')
-
         expect(cross.text()).toBe('+')
     })
 
-    it('display correct html after click', () => {
-        const button = wrapper.find('.button')
-        button.trigger('click')
-        expect(button.html()).toContain('<button class="button">Hide<span class="cross">-</span></button>')
+    it('display correct html before click', () => {
+        const button = wrapper.find('button[name="btn"]')
+        expect(button.html()).toContain('Add')
     })
 })

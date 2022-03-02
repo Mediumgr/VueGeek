@@ -1,15 +1,5 @@
 export default {
-        //addData для теста addData в AddPayment
-            addData({commit}, payload) {
-            console.log(commit, payload)
-         },
-        // addToForm для теста addToForm в PutCategory 
-            addForTest({
-                    commit
-                }, payload) {
-            console.log(commit, payload)
-        },
-     fetchDataFromApp({
+     fetchData({
              commit
          }) {
              return new Promise((resolve) => {

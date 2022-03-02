@@ -1,6 +1,8 @@
 <template>
-  <div class="error">
-    Ошибка 404. Такая страница не найдена.
+  <div class="container">
+    <div class="error">
+      Ошибка 404. Такая страница не найдена.
+    </div>
   </div>
 </template>
 
@@ -11,11 +13,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(203, 244, 245);
+}
 .error {
   display: flex;
   align-items: center;
   justify-content: center;
   background: #d36378;
+  font-size: 26px;
   width: 50%;
   min-height: 100px;
   color: white;

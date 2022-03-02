@@ -1,27 +1,46 @@
 <template>
   <div>
-    <div class="add">
+    <div>
       <transition appear name="btn">
-        <button @click="hide = !hide" class="button">{{ hide === true ? "Hide" : "Add"}}<span class="cross">{{ hide === true ? "-" : "+" }}</span></button>
+        <button @click="hide = !hide" class="button" name="btn">
+          {{ hide === false ? "Add" : "Hide" }}
+          <span class="cross">
+            {{ hide === false ? "+" : "-" }}
+          </span>
+        </button>
       </transition>
     </div>
     <transition appear name="fade">
       <div v-show="hide" class="display">
-        <input v-model="date" name="testJest" placeholder="date" class="input"/>
-        <input v-model.trim="category" name="testJest2" placeholder="category" class="input"/>
-        <input v-model.number="value" name="testJest3" type="number" placeholder="value" class="input"/>
-        <button @click="onClick()" class="button testBtn" :disabled="!category || !value">
+        <input
+          v-model="date"
+          placeholder="Date"
+          class="input testJest"
+        />
+        <input
+          v-model.trim="category"
+          placeholder="Category"
+          class="input testJest2"
+        />
+        <input
+          v-model.number="value"
+          type="number"
+          placeholder="Amount"
+          class="input testJest3"
+        />
+        <button
+          @click="onClick()"
+          class="button"
+          :disabled="!category || value <= 0"
+        >
           {{ message }}
         </button>
-        <div class="text">{{ text }}</div>
       </div>
     </transition>
   </div>
 </template>
 
 <script>
-/* import { mapActions }  для теста (см. method ниже)*/
-import { mapActions } from "vuex";
 
 export default {
   name: "AddPayment",
@@ -37,7 +56,6 @@ export default {
       value: null,
       hide: false,
       id: 0,
-      text: "",
     };
   },
   methods: {
@@ -49,18 +67,13 @@ export default {
         value: this.value,
         id: ++idNum,
       };
-
-      if (data.category !== undefined && data.value >= 0) {
+      if (data.category && data.value >= 0) {
         this.message = "Added";
-        this.text = "";
         this.$store.commit("addDataToPaymentsList", data);
         setTimeout(() => {
           this.message = "Add";
-        }, 3500);
-      } else {
-        this.text = "Вы ввели недопустимое значение стоимости затрат..";
+        }, 2500);
       }
-      //ModalWindow property:
       if (this.$attrs.property) {
         const data = {
           date: this.date,
@@ -73,13 +86,7 @@ export default {
         this.$context.close();
         this.$router.push({ name: "Dashboard" });
       }
-
-      /* для теста testVuex.test.js при клике*/
-      const someData = this.data;
-      this.addData(someData);
     },
-    /* для теста testVuex.test.js*/
-    ...mapActions(["addData"]),
   },
   computed: {
     getCurrentDate() {
@@ -90,22 +97,21 @@ export default {
       return `${d}.${m}.${y}`;
     },
   },
-  created() {
-    if (
-      this.$route.name === "AddPaymentOpen" ||
-      this.$route.query.data === "edit"
-    ) {
+   created() {
+    if (this.$route.name === "AddPaymentOpen" || this.$route.query.data === "edit") {
       this.hide = true;
     }
-    if (this.$route.params.categoryId) {
+    if (this.$route.name === "AddPayment" && this.$route.params.categoryId !== "") {
       this.hide = true;
-      this.category = this.$store.state.selectCategory =
-        this.$route.params.categoryId;
+      const categoryRoute = this.$route.params.categoryId;
+      this.category = categoryRoute.charAt(0).toUpperCase() + categoryRoute.slice(1);
+      this.$emit("add-to-category-select", this.category);
     }
-    if (this.$route.query.value) {
+    if (this.$route.name === "AddPayment" && this.$route.query.value) {
       this.value = parseInt(this.$route.query.value);
     }
     if (this.$attrs.property) {
+      this.hide = true;
       this.date = this.$attrs.property.editedItem.date;
       this.category = this.$attrs.property.editedItem.category;
       this.value = this.$attrs.property.editedItem.value;
@@ -116,7 +122,21 @@ export default {
     selectCategory() {
       this.category = this.selectCategory;
     },
-  },
+    $route(toR) {
+      if (toR.name === "AddPaymentOpen") {
+        this.hide = true;
+      }
+      if (toR.name === "AddPayment" && toR.params.categoryId) {
+        this.hide = true;
+        const categoryRoute = this.$route.params.categoryId;
+        this.category = categoryRoute.charAt(0).toUpperCase() + categoryRoute.slice(1);
+        this.$emit("add-to-category-select", this.category);
+      }
+      if (toR.name === "AddPayment" && toR.query.value) {
+        this.value = parseInt(toR.query.value);
+      }
+    }
+  }
 };
 </script>
 
@@ -167,14 +187,9 @@ export default {
   padding: 0 0 0 15px;
 }
 
-.text {
-  width: 400px;
-  background: #ccc;
-}
-
 .fade-enter-active,
 .fade-leave-active {
-  transition: all 1s ease;
+  transition: all 1.5s ease;
 }
 
 .fade-enter,
@@ -188,6 +203,6 @@ export default {
 }
 .btn-enter-active,
 .btn-leave-active {
-  transition: all 1s ease;
+  transition: all 1.5s ease;
 }
 </style>

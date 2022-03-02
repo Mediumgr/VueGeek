@@ -9,27 +9,27 @@ let router = new Router({
         {
             path: '',
             name: 'Dashboard',
-            component: () => import( /* webpackChunkName: 'Dashboard' */ '../components/Dashboard.vue')
+            component: () => import('../components/Dashboard.vue')
         },
         {
             path: '/page/:id',
             name: 'PagesPagination',
-            component: () => import( /* webpackChunkName: 'PagesPagination' */ '../components/PagesPagination.vue')
+            component: () => import('../components/PagesPagination.vue')
         },
         {
             path: '/add/payment/',
             name: 'AddPaymentOpen',
-            component: () => import( /* webpackChunkName: 'AddPayment' */ '../components/AddPayment.vue')
+            component: () => import('../components/AddPayment.vue')
         },
         {
             path: '/add/payment/:categoryId',
             name: 'AddPayment',
-            component: () => import( /* webpackChunkName: 'AddPayment' */ '../components/AddPayment.vue')
+            component: () => import('../components/AddPayment.vue')
         },
         {
             path: '*',
             name: 'NotFound',
-            component: () => import( /* webpackChunkName: 'Page404' */ '../components/Page404.vue')
+            component: () => import('../components/Page404.vue')
         }
     ]
 })

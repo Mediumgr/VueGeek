@@ -2,93 +2,95 @@
   <div class="flexDash">
     <div class="group">
       <transition-group appear name="fade">
-        <add-payment :selectCategory="selectCategory" :length="paymentsList.length" key="AddPayment"/>
+        <add-payment
+          :selectCategory="selectCategory"
+          :length="paymentsList.length"
+          @add-to-category-select="categoryOption"
+          key="AddPayment"/>
         <div class="flex" key="div">
-          <category-select :categories="categories" key="CategorySelect" />
+          <category-select 
+          :categories="categories" 
+          :categoryTransfer="categoryTransfer" 
+          key="CategorySelect"/>
           <put-category />
         </div>
-        <payments-display :length="paymentsList.length" :list="currentElements" :total="getFPV" key="PaymentsDisplay"/>
-        <pages-pagination :displayedItems="displayedItems" :length="paymentsList.length" :currentPage="currentPage" key="PagesPagination"/>
+        <payments-display
+          :length="paymentsList.length"
+          :list="currentElements"
+          @current-page="getCurrentPage"
+          :total="getFPV"
+          key="PaymentsDisplay"/>
+        <pages-pagination
+          :displayedItems="displayedItems"
+          :length="paymentsList.length"
+          @current-page="getCurrentPage"
+          :currentPage="currentPage"
+          key="PagesPagination"/>
       </transition-group>
     </div>
-    <vue-chart-container :items="paymentsList" :categories="categories"></vue-chart-container>
+    <vue-chart-container
+      :items="paymentsList"
+      :categories="categories">
+    </vue-chart-container>
   </div>
 </template>
 
 <script>
-import PaymentsDisplay from "@/components/PaymentsDisplay.vue";
-import CategorySelect from "@/components/CategorySelect.vue";
-import PagesPagination from "@/components/PagesPagination.vue";
-import PutCategory from "@/components/PutCategory.vue";
-import AddPayment from "@/components/AddPayment.vue";
-import VueChartContainer from "@/components/VueChartContainer.vue";
-
-import { mapMutations, mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Dashboard",
   components: {
-    PaymentsDisplay,
-    CategorySelect,
-    AddPayment,
-    PagesPagination,
-    PutCategory,
-    VueChartContainer
+    PaymentsDisplay: () => import("@/components/PaymentsDisplay.vue"),
+    CategorySelect: () => import("@/components/CategorySelect.vue"),
+    AddPayment: () => import("@/components/AddPayment.vue"),
+    PagesPagination: () => import("@/components/PagesPagination.vue"),
+    PutCategory: () => import("@/components/PutCategory.vue"),
+    VueChartContainer: () => import("@/components/VueChartContainer.vue"),
   },
   data() {
     return {
-      page: ""
+      page: "",
+      currentPage: 1,
+      displayedItems: 3,
+      categoryTransfer: ''
     };
   },
   methods: {
-    ...mapMutations([
-      "setPaymentListData",
-      "addDataToPaymentsList",
-      "addSelected",
-      "addDataToForm",
-      "setCategoryList",
-      "paymentListWithFetchData",
-      "paginate",
-      "changeDataItemPaymentsList"
+    ...mapActions([
+      "fetchCategory",
+      "fetchData"
     ]),
-    ...mapActions(["fetchCategory", "fetchDataFromApp"])
+    getCurrentPage(page) {
+      this.currentPage = page
+    },
+    categoryOption(category) {
+      this.categoryTransfer = category
+    },
   },
   computed: {
     ...mapGetters({
       paymentsList: "getPaymentList",
       categories: "getCategoryList",
       selectCategory: "addSelectedToList",
-      currentPage: "paginatePages",
-      displayedItems: "displayedPage"
+      getFPV: "getFullPaymentValue"
     }),
-    getFPV() {
-      return this.$store.getters.getFullPyamentValue;
-    },
     currentElements() {
       const { displayedItems, currentPage } = this;
-      return this.paymentsList.slice(displayedItems * (currentPage - 1),displayedItems * (currentPage - 1) + displayedItems
-      );
-    },
-  },
-  created() {
-    this.$store.dispatch("fetchDataFromApp");
-    if (!this.categories.length) {
-      /*  this.$store.dispatch('fetchCategory') */
-      this.fetchCategory();
+      return this.paymentsList.slice(displayedItems * (currentPage - 1), displayedItems * (currentPage - 1) + displayedItems);
     }
+},
+  created() {
+    this.fetchData();
+    this.fetchCategory();
   },
   mounted() {
-    const page = parseInt(this.$route.params.id) || 1;
-    this.$store.state.currentPage = page;
-  }
+    this.currentPage = Number(this.$route.params.id) || 1;
+  },
 };
 </script>
 
 <style scoped>
-.total {
-  padding: 50px;
-}
-
 .group {
   width: 610px;
 }
@@ -111,5 +113,4 @@ export default {
 .fade-leave-to {
   opacity: 0;
 }
-
 </style>

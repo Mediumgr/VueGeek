@@ -10,35 +10,51 @@ const localVue = createLocalVue()
 localVue.use(Vuex)
 
 describe('PutCategory.vue', () => {
-    let actions
+    let mutations
     let store
 
     beforeEach(() => {
-        actions = {
-            addToForm: jest.fn()
+        mutations = {
+            addDataToForm: jest.fn()
         }
 
         store = new Vuex.Store({
-            actions
+            mutations
         })
     })
 
-    it('run action addToForm',  () => {
+    it('run action addToForm', () => {
         const wrapper = shallowMount(PutCategory, {
             store,
             localVue
         })
-
         const testInput = wrapper.find('.add')
-      
-        testInput.element.value = "AddedFromTheTest"
 
-        testInput.trigger('input')
+        let promiseExecute = new Promise(function (resolve, reject) {
+            resolve(
+                testInput.setvalue("AddedFromTheTest")
+            )
 
-        const btn = wrapper.find('.button')
+            promiseExecute.then(() => {
+                clickInput()
+            }).then(() => {
+                clickButton()
+            }).then(() => {
+                expect(mutations.addDataToForm).toHaveBeenCalled()
+            }).catch(error =>
+                console.log('Promise to execute did not accomplish: ', error)
+            )
 
-        btn.trigger('click')
+            function clickInput() {
+                testInput.trigger('input')
+            }
 
-        expect(actions.addToForm).toHaveBeenCalled()
+            function clickButton() {
+                const btn = wrapper.find('button[name="btn"]')
+                btn.trigger('click')
+            }
+
+            expect(mutations.addDataToForm).toHaveBeenCalled()
+        })
     })
 })

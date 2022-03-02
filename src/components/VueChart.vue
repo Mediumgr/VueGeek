@@ -1,5 +1,5 @@
 <div>
-    <canvas ref="canvas" id="myChart" class="chart"></canvas>
+    <canvas ref="canvas" id="myChart"></canvas>
 </div>
 
 <script>

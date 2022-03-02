@@ -11,9 +11,8 @@
         Category
       </div>
       <div class="titleValue">
-        Value
+        Amount
       </div>
-      <div class="div"></div>
     </div>
     <transition-group name="animation" tag="div">
       <div v-for="item in list" :key="item.id" class="elements">
@@ -26,11 +25,10 @@
         </div>
       </div>
     </transition-group>
-    <div class="emptyEelements" v-if="!length">Список пуст</div>
+    <div class="emptyEelements" v-if="!length">
+      Список пуст
+    </div>
     <div class="total-block">
-      <div class="div"></div>
-      <div class="div"></div>
-      <div class="div"></div>
       <div class="total">Total: {{ total }}</div>
     </div>
   </div>
@@ -42,49 +40,49 @@ export default {
   props: {
     length: {
       type: Number,
-      default: null
+      default: null,
     },
     list: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     total: {
-      type: Number
-    }
+      type: Number,
+      default: 0
+    },
   },
   methods: {
     contextMenuClick(event, item) {
       const items = [
-        {text: "Edit",src: "edit.svg",action: function() {this.actionEdit(item)}.bind(this)},
-        //можно так: function () {this.actionEdit(item)}.bind(this) или так action: () => this.actionEdit(item)
-        {text: "Delete",src: "trash.svg",action: () => this.actionDelete(item)}
-        ];
+        { text: "Edit", src: "edit.svg", action: function() { this.actionEdit(item) }.bind(this) },
+        { text: "Delete", src: "trash.svg", action: () => this.actionDelete(item)},
+      ];
       this.$context.show({ event, items });
     },
     actionEdit(item) {
       this.$modal.show("AddPayment", {
         header: "Add new data",
-        editedItem: item
+        editedItem: item,
       });
     },
     actionDelete(item) {
       this.$store.commit("deletItem", item);
       this.$context.close();
-    }
+    },
   },
   watch: {
     length() {
       if (this.length % 3 === 0) {
-        let num = this.length / 3; // делим на 3, т.к. выводим по 3 элемента на каждой странице
-        this.$store.commit("paginate", num); //переход к нужной странице
+        let num = this.length / 3; // выводим по 3 элемента на каждой странице
+        this.$emit('current-page', num);
       }
       if (this.length % 3 === 1) {
         let num = Math.floor(this.length / 3) + 1;
         this.$router.push({ name: "PagesPagination", params: { id: num } });
-        this.$store.commit("paginate", num); //переход к нужной странице
+        this.$emit('current-page', num);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -168,30 +166,25 @@ export default {
 }
 
 .titleValue {
-  flex-basis: 20%;
+  flex-basis: 30%;
 }
 
 .total {
-  text-align: end;
   text-transform: uppercase;
   color: red;
   font-size: 19px;
+  flex-basis: 30%
 }
 
 .total-block {
   display: flex;
   justify-content: flex-end;
   padding: 20px 0 20px;
-  width: 76%;
 }
 
 .contextMenu {
   width: 4.6px;
   cursor: pointer;
-}
-
-.img {
-  height: 14px;
 }
 
 .animation-enter-active {

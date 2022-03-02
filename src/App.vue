@@ -7,9 +7,6 @@
         </transition>
       </header>
       <main>
-        <router-link
-          :to="{ name: 'AddPaymentOpen', query: { value: 200 } }"
-        ></router-link>
         <dashboard></dashboard>
       </main>
       <transition name="fade">
@@ -19,7 +16,7 @@
         <modal-window v-if="modalSettings.name" :settings="modalSettings" />
       </transition>
     </div>
-    <page404 v-else/>
+    <page404 v-else />
   </div>
 </template>
 
@@ -27,18 +24,10 @@
 export default {
   name: "App",
   components: {
-    Dashboard: () =>
-      import(/* webpackChunkName: 'Dashboard' */ "./components/Dashboard.vue"),
-    ModalWindow: () =>
-      import(
-        /* webpackChunkName: 'ModalWindow' */ "./components/ModalWindow.vue"
-      ),
-    ContextMenu: () =>
-      import(
-        /* webpackChunkName: 'ContextMenu' */ "./components/ContextMenu.vue"
-      ),
-    Page404: () =>
-      import(/* webpackChunkName: 'Page404' */ "./components/Page404.vue"),
+    Dashboard: () => import("./components/Dashboard.vue"),
+    ModalWindow: () => import("./components/ModalWindow.vue"),
+    ContextMenu: () => import("./components/ContextMenu.vue"),
+    Page404: () => import("./components/Page404.vue"),
   },
   data() {
     return {

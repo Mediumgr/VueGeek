@@ -152,7 +152,14 @@
 <a name='L93'></a><a href='#L93'>93</a>
 <a name='L94'></a><a href='#L94'>94</a>
 <a name='L95'></a><a href='#L95'>95</a>
-<a name='L96'></a><a href='#L96'>96</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -186,12 +193,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -248,108 +250,109 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;template&gt;
-    &lt;div class="block"&gt;
-        &lt;div @click="onClick(currentPage - 1)" class="common"&gt;
-            -
-        &lt;/div&gt;
-        &lt;transition-group name="animation" class="flex"&gt;
-            &lt;div v-for="num in amount" :key="num" @click="onClick(num)" :class="[{active:currentPage === num}]" class="button"&gt;{{ num }}         
-            &lt;/div&gt;
-         &lt;/transition-group&gt;
-        &lt;div @click="onClick(currentPage + 1)" class="common"&gt;
-            +
-        &lt;/div&gt;
+  &lt;div class="block"&gt;
+    &lt;div @click="onClick(currentPage - 1)" class="common"&gt;
+      -
     &lt;/div&gt;
+    &lt;transition-group name="animation" class="flex"&gt;
+      &lt;div
+        v-for="num in amount"
+        :key="num"
+        @click="onClick(num)"
+        :class="[{ active: currentPage === num }]"
+        class="button"&gt;
+        {{ num }}
+      &lt;/div&gt;
+    &lt;/transition-group&gt;
+    &lt;div @click="onClick(currentPage + 1)" class="common"&gt;
+      +
+    &lt;/div&gt;
+  &lt;/div&gt;
 &lt;/template&gt;
 &nbsp;
 &lt;script&gt;
 export default {
-    name: "Pages",
-    props: {
-        length: Number,
-        displayedItems: Number,
-        currentPage: Number
+  name: "Pages",
+  props: {
+    length: Number,
+    displayedItems: Number,
+    currentPage: Number
   },
-    methods: {
-<span class="fstat-no" title="function not covered" >        onClick(page) {</span>
-<span class="cstat-no" title="statement not covered" ><span class="missing-if-branch" title="if path not taken" >I</span>                if (page &lt; 1 || page &gt; this.amount) {</span>
-<span class="cstat-no" title="statement not covered" >                return</span>
-            }
-<span class="cstat-no" title="statement not covered" >            this.$store.commit('paginate', page)</span>
-<span class="cstat-no" title="statement not covered" >            this.$router.push({name: "PagesPagination", params: {id:page}})</span>
-&nbsp;
-        }
+  methods: {
+<span class="fstat-no" title="function not covered" >    onClick(page) {</span>
+<span class="cstat-no" title="statement not covered" ><span class="missing-if-branch" title="if path not taken" >I</span>      if (page &lt; 1 || page &gt; this.amount) {</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      this.$emit('current-page', page);</span>
+<span class="cstat-no" title="statement not covered" >      this.$router.push({ name: "PagesPagination", params: { id: page } });</span>
     },
-    computed: {
-<span class="fstat-no" title="function not covered" >        amount () {</span>
-<span class="cstat-no" title="statement not covered" >            return Math.ceil(this.length / this.displayedItems)</span>
-    }
+  },
+  computed: {
+<span class="fstat-no" title="function not covered" >    amount() {</span>
+<span class="cstat-no" title="statement not covered" >      return Math.ceil(this.length / this.displayedItems);</span>
+    },
   }
-}
-&nbsp;
+};
 &lt;/script&gt;
 &nbsp;
 &lt;style scoped&gt;
-&nbsp;
 .block {
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 410px;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 410px;
 }
 &nbsp;
 .flex {
-    display: flex;
+  display: flex;
 }
 &nbsp;
 .common {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 26px;
-    margin: 20px 10px 20px;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 26px;
+  margin: 20px 10px 20px;
+  cursor: pointer;
 }
-&nbsp;
-.active {
-      background: rgb(230, 2, 199);
-    }
 &nbsp;
 .button {
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 25px;
-    height: 26px;
-    margin: 20px 10px 20px;
-    background: rgb(55, 202, 221);;
-    color: rgb(235, 235, 235);
-    border: none;
-    cursor: pointer;
-    text-transform: uppercase;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 26px;
+  margin: 20px 10px 20px;
+  background: rgb(55, 202, 221);
+  color: rgb(235, 235, 235);
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
 }
 &nbsp;
 .active {
-      background: rgb(230, 2, 199);
+  background: rgb(230, 2, 199);
 }
 &nbsp;
-.animation-enter-active, .animation-leave-active {
-    transition: 1s all;
+.animation-enter-active,
+.animation-leave-active {
+  transition: 1s all;
 }
 &nbsp;
-.animation-enter, .animation-leave-to {
-    transform: translateX(-35px);
+.animation-enter,
+.animation-leave-to {
+  transform: translateX(-35px);
 }
-&nbsp;
-&lt;/style&gt;</pre></td></tr></table></pre>
+&lt;/style&gt;
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Fri Oct 29 2021 15:07:56 GMT+0300 (Москва, стандартное время)
+                at Thu Feb 24 2022 20:17:35 GMT+0300 (Москва, стандартное время)
             </div>
         </div>
         <script src="../../../prettify.js"></script>

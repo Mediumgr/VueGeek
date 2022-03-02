@@ -4,8 +4,7 @@
       v-for="item in items"
       :key="item.text"
       class="context__item"
-      @click="onClick(item)"
-    >
+      @click="onClick(item)">
       <img :src="require(`../assets/${item.src}`)" alt="pic" class="images" />
       {{ item.text }}
     </div>

@@ -13,17 +13,17 @@ import AddPayment from "./AddPayment.vue";
 export default {
   components: { AddPayment },
   props: {
-    settings: Object
+    settings: Object,
   },
   methods: {
     close() {
       this.$modal.hide();
       this.$router.push({ name: "Dashboard" });
-    }
+    },
   },
   created() {
     this.$router.push({ name: "AddPaymentOpen", query: { data: "edit" } });
-  }
+  },
 };
 </script>
 
@@ -34,8 +34,8 @@ export default {
   background: #62a0bd;
   z-index: 200;
   position: fixed;
-  top: 210px;
-  left: 0px;
+  top: 220px;
+  right: 72px;
   margin-left: 28px;
 }
 

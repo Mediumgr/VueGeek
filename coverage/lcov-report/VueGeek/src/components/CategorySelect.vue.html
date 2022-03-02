@@ -107,7 +107,13 @@
 <a name='L48'></a><a href='#L48'>48</a>
 <a name='L49'></a><a href='#L49'>49</a>
 <a name='L50'></a><a href='#L50'>50</a>
-<a name='L51'></a><a href='#L51'>51</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -127,20 +133,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -159,62 +171,68 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;template&gt;
   &lt;div&gt;
-      &lt;select v-model="selected" class="selected"&gt;
-          &lt;option v-for="(option, idx) in categories" :key="idx"&gt;
-              {{option}}
-          &lt;/option&gt;
-      &lt;/select&gt;
+    &lt;select v-model="selected" class="selected"&gt;
+      &lt;option v-for="option in categories" :key="option"&gt;
+        {{ option }}
+      &lt;/option&gt;
+    &lt;/select&gt;
   &lt;/div&gt;
 &lt;/template&gt;
 &nbsp;
 &lt;script&gt;
 export default {
-    name: "CategorySelect",
-    props: {
-        categories: {
-            type: Array,
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >            default: ()=&gt;[]</span></span>
-        }
+  name: "CategorySelect",
+  props: {
+    categories: {
+      type: Array,
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >      default: () =&gt; [],</span></span>
     },
-<span class="fstat-no" title="function not covered" >    data(){</span>
-<span class="cstat-no" title="statement not covered" >        return {</span>
-            selected: ''
-        }
+    categoryTransfer: {
+      type: String,
+      default: null,
     },
-    watch: {
-<span class="fstat-no" title="function not covered" >        selected () {</span>
-<span class="cstat-no" title="statement not covered" ><span class="missing-if-branch" title="if path not taken" >I</span>            if (this.selected) {</span>
-<span class="cstat-no" title="statement not covered" >                this.$store.commit('addSelected', this.selected)</span>
-                }
-            }
-        },
-<span class="fstat-no" title="function not covered" >    created() {</span>
-<span class="cstat-no" title="statement not covered" ><span class="missing-if-branch" title="if path not taken" >I</span>        if (!this.selected) {</span>
-<span class="cstat-no" title="statement not covered" >        this.selected = this.$store.state.selectCategory</span>
-            }
-        }
+  },
+<span class="fstat-no" title="function not covered" >  data() {</span>
+<span class="cstat-no" title="statement not covered" >    return {</span>
+      selected: "",
+    };
+  },
+  watch: {
+<span class="fstat-no" title="function not covered" >    selected() {</span>
+<span class="cstat-no" title="statement not covered" ><span class="missing-if-branch" title="if path not taken" >I</span>      if (this.selected) {</span>
+<span class="cstat-no" title="statement not covered" >        this.$store.commit("addSelected", this.selected);</span>
+      }
     }
+  },
+<span class="fstat-no" title="function not covered" >  created() {</span>
+<span class="cstat-no" title="statement not covered" ><span class="missing-if-branch" title="if path not taken" >I</span>    if (this.categoryTransfer) {</span>
+<span class="cstat-no" title="statement not covered" >      this.selected = this.categoryTransfer;</span>
+    }
+  },
+};
 &lt;/script&gt;
 &nbsp;
 &lt;style&gt;
 .selected:hover {
-    outline: none;
+  outline: none;
 }
 .selected {
-    outline: none;
-    width: 105px;
-    height: 22px;
-    border: 1px solid grey;
-    border-radius: 3px;
+  background-color: white;
+  outline: none;
+  width: 107px;
+  height: 27px;
+  border: 1px solid rgb(55, 202, 221);
+  border-radius: 3px;
 }
-&lt;/style&gt;</pre></td></tr></table></pre>
+&lt;/style&gt;
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Fri Oct 29 2021 15:07:56 GMT+0300 (Москва, стандартное время)
+                at Thu Feb 24 2022 20:17:35 GMT+0300 (Москва, стандартное время)
             </div>
         </div>
         <script src="../../../prettify.js"></script>

@@ -3,8 +3,7 @@
     <vue-chart
       :paymentsList="items"
       :options="options"
-      :categories="categories"
-    />
+      :categories="categories"/>
   </div>
 </template>
 
@@ -15,24 +14,24 @@ export default {
   name: "VueChartContainer",
   components: { VueChart },
   data: () => ({
-    options: { maintainAspectRatio: true }
+    options: { maintainAspectRatio: true },
   }),
   props: {
     items: {
       type: Array,
-      default: null
+      default: null,
     },
     categories: {
       type: Array,
-      default: null
-    }
-  }
+      default: null,
+    },
+  },
 };
 </script>
 
 <style scoped>
 .container {
-  padding: 0 90px 0 0;
+  padding: 0 120px 0 0;
   width: 410px;
   height: 410px;
 }

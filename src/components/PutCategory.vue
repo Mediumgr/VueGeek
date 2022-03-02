@@ -1,38 +1,43 @@
 <template>
   <div class="block">
-    Add to form: <input type="text" v-model="add" class="add" />
-    <button class="button" @click="addToForm">Add</button>
+    Add your <b> own </b> category:
+    <input type="text" v-model="add" class="add" />
+    <button
+      @click="addToForm"
+      :class="[message === 'Add' ? 'button' : 'activeBtn']"
+      name="btn"
+    >
+      {{ message }}
+    </button>
   </div>
 </template>
 
 <script>
-/* import { mapActions }  для теста testPutCategory (см. method ниже)*/
-import { mapActions } from "vuex";
 
 export default {
   name: "PutCategory",
   data() {
     return {
-      add: ""
+      add: "",
+      message: "Add"
     };
   },
   methods: {
     addToForm() {
       if (this.add) {
         this.$store.commit("addDataToForm", this.add);
+        this.message = "SUCCESS!";
+        setTimeout(() => {
+          this.message = "Add";
+        }, 1500);
         this.add = "";
       }
-      //для теста testPutCategory.test.js
-      let data = this.add;
-      this.addForTest(data);
-    },
-    //для теста testPutCategory.test.js
-    ...mapActions(["addForTest"])
-  }
+    }
+  },
 };
 </script>
 
-<style scoped>    
+<style scoped>
 .block {
   margin-left: 15px;
 }
@@ -61,6 +66,18 @@ export default {
   cursor: pointer;
   margin-left: 10px;
   transition: 1.5s;
+}
+
+.activeBtn {
+  height: 26px;
+  width: 85px;
+  border: none;
+  outline: none;
+  background: rgb(55, 202, 221);
+  color: white;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: 0.5s;
 }
 
 .button:hover {
