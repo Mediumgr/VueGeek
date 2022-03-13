@@ -25,7 +25,7 @@
         </div>
       </div>
     </transition-group>
-    <div class="emptyEelements" v-if="!length">
+    <div class="emptyElements" v-if="!length">
       Список пуст
     </div>
     <div class="total-block">
@@ -49,7 +49,7 @@ export default {
     total: {
       type: Number,
       default: 0
-    },
+    }
   },
   methods: {
     contextMenuClick(event, item) {
@@ -66,7 +66,7 @@ export default {
       });
     },
     actionDelete(item) {
-      this.$store.commit("deletItem", item);
+      this.$store.commit("deleteItem", item);
       this.$context.close();
     },
   },
@@ -78,7 +78,7 @@ export default {
       }
       if (this.length % 3 === 1) {
         let num = Math.floor(this.length / 3) + 1;
-        this.$router.push({ name: "PagesPagination", params: { id: num } });
+        this.$router.push({ name: 'PagesPagination', params: { id: num } });
         this.$emit('current-page', num);
       }
     },
@@ -129,7 +129,7 @@ export default {
   flex-basis: 20%;
 }
 
-.emptyEelements {
+.emptyElements {
   display: flex;
   justify-content: center;
   padding: 20px 0 20px;

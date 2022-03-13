@@ -30,7 +30,7 @@ describe('PutCategory.vue', () => {
         })
         const testInput = wrapper.find('.add')
 
-        let promiseExecute = new Promise(function (resolve, reject) {
+        let promiseExecute = new Promise(function (resolve) {
             resolve(
                 testInput.setvalue("AddedFromTheTest")
             )

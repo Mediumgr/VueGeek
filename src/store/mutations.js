@@ -10,7 +10,7 @@ export default {
     changeDataItemPaymentsList(state, payload) {
         Vue.set(state.paymentsList, [payload.id - 1], payload)
     },
-    deletItem(state, payload) {
+    deleteItem(state, payload) {
         state.paymentsList.splice(state.paymentsList.indexOf(payload), 1)
         state.paymentsList.forEach((item, index) => {
             item.id = index + 1

@@ -108,7 +108,7 @@ export default {
       this.$emit("add-to-category-select", this.category);
     }
     if (this.$route.name === "AddPayment" && this.$route.query.value) {
-      this.value = parseInt(this.$route.query.value);
+      this.value = +this.$route.query.value;
     }
     if (this.$attrs.property) {
       this.hide = true;
@@ -170,7 +170,6 @@ export default {
   border: none;
   cursor: pointer;
   text-transform: uppercase;
-  border: none;
   transition: 1.5s;
 }
 

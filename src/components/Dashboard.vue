@@ -6,12 +6,14 @@
           :selectCategory="selectCategory"
           :length="paymentsList.length"
           @add-to-category-select="categoryOption"
-          key="AddPayment"/>
+          key="AddPayment"
+        />
         <div class="flex" key="div">
-          <category-select 
-          :categories="categories" 
-          :categoryTransfer="categoryTransfer" 
-          key="CategorySelect"/>
+          <category-select
+            :categories="categories"
+            :categoryTransfer="categoryTransfer"
+            key="CategorySelect"
+          />
           <put-category />
         </div>
         <payments-display
@@ -19,18 +21,20 @@
           :list="currentElements"
           @current-page="getCurrentPage"
           :total="getFPV"
-          key="PaymentsDisplay"/>
+          key="PaymentsDisplay"
+        />
         <pages-pagination
           :displayedItems="displayedItems"
           :length="paymentsList.length"
           @current-page="getCurrentPage"
           :currentPage="currentPage"
-          key="PagesPagination"/>
+          key="PagesPagination"
+        />
       </transition-group>
     </div>
     <vue-chart-container
-      :items="paymentsList"
-      :categories="categories">
+        :items="paymentsList"
+        :categories="categories">
     </vue-chart-container>
   </div>
 </template>
@@ -53,19 +57,16 @@ export default {
       page: "",
       currentPage: 1,
       displayedItems: 3,
-      categoryTransfer: ''
+      categoryTransfer: "",
     };
   },
   methods: {
-    ...mapActions([
-      "fetchCategory",
-      "fetchData"
-    ]),
+    ...mapActions(["fetchCategory", "fetchData"]),
     getCurrentPage(page) {
-      this.currentPage = page
+      this.currentPage = page;
     },
     categoryOption(category) {
-      this.categoryTransfer = category
+      this.categoryTransfer = category;
     },
   },
   computed: {
@@ -73,20 +74,20 @@ export default {
       paymentsList: "getPaymentList",
       categories: "getCategoryList",
       selectCategory: "addSelectedToList",
-      getFPV: "getFullPaymentValue"
+      getFPV: "getFullPaymentValue",
     }),
     currentElements() {
       const { displayedItems, currentPage } = this;
-      return this.paymentsList.slice(displayedItems * (currentPage - 1), displayedItems * (currentPage - 1) + displayedItems);
-    }
-},
+      return this.paymentsList.slice(
+        displayedItems * (currentPage - 1),
+        displayedItems * (currentPage - 1) + displayedItems
+      );
+    },
+  },
   created() {
     this.fetchData();
     this.fetchCategory();
-  },
-  mounted() {
-    this.currentPage = Number(this.$route.params.id) || 1;
-  },
+  }
 };
 </script>
 

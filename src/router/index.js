@@ -5,8 +5,7 @@ Vue.use(Router)
 
 let router = new Router({
     mode: 'history',
-    routes: [
-        {
+    routes: [{
             path: '',
             name: 'Dashboard',
             component: () => import('../components/Dashboard.vue')

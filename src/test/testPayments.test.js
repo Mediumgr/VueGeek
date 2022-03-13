@@ -26,8 +26,8 @@ describe('PaymentsDisplay', () => {
         expect(total.html()).toEqual(
             '<div class="total">Total: 100</div>'
         )
-        const emptyEelements = wrapper.find('.emptyEelements')
-        expect(emptyEelements.html()).toContain('Список пуст')
+        const emptyElements = wrapper.find('.emptyElements')
+        expect(emptyElements.html()).toContain('Список пуст')
 
     });
 

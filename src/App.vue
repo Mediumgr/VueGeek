@@ -66,10 +66,6 @@ export default {
 </script>
 
 <style scoped>
-.flex {
-  display: flex;
-}
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -78,7 +74,6 @@ export default {
   padding-left: 20px;
   padding-top: 20px;
   margin: 0 auto;
-  font-family: serif;
 }
 
 .active {

@@ -9,7 +9,8 @@
         :key="num"
         @click="onClick(num)"
         :class="[{ active: currentPage === num }]"
-        class="button">
+        class="button"
+      >
         {{ num }}
       </div>
     </transition-group>
@@ -23,7 +24,7 @@
 export default {
   name: "Pages",
   props: {
-     length: {
+    length: {
       type: Number,
       default: null,
     },
@@ -41,7 +42,7 @@ export default {
       if (page < 1 || page > this.amount) {
         return;
       }
-      this.$emit('current-page', page);
+      this.$emit("current-page", page);
       this.$router.push({ name: "PagesPagination", params: { id: page } });
     },
   },
@@ -49,6 +50,12 @@ export default {
     amount() {
       return Math.ceil(this.length / this.displayedItems);
     },
+  },
+  created() {
+    if (this.$route.params.id) {
+      const page = +this.$route.params.id;
+      this.$emit("current-page", page);
+    }
   }
 };
 </script>

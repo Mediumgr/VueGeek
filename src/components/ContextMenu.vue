@@ -4,7 +4,8 @@
       v-for="item in items"
       :key="item.text"
       class="context__item"
-      @click="onClick(item)">
+      @click="onClick(item)"
+    >
       <img :src="require(`../assets/${item.src}`)" alt="pic" class="images" />
       {{ item.text }}
     </div>
@@ -27,8 +28,8 @@ export default {
       item.action();
     },
     onShow({ items, caller }) {
-      this.items = items, 
-      this.shown = true, 
+      this.items = items;
+      this.shown = true;
       this.setPosition(caller);
     },
     setPosition(caller) {
@@ -36,7 +37,7 @@ export default {
       this.yPos = caller.getBoundingClientRect().top;
     },
     onClose() {
-      this.items = [],
+      this.items = [];
       this.shown = false;
     },
   },
