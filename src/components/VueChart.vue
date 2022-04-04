@@ -20,13 +20,13 @@ export default {
     categories: {
       type: Array,
       default: () => [],
-    },
+    }
   },
   methods: {
     render() {
       this.renderChart(
         {
-          labels: this.categories,
+          labels: this.labels(),
           datasets: [
             {
               label: "expenses by category",
@@ -62,6 +62,11 @@ export default {
         },
         this.options
       );
+    },
+    labels() {
+      if (this.paymentsList.length) {
+        return this.categories
+      }
     },
     getValue(newValue) {
       this.render(newValue);

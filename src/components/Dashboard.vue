@@ -85,7 +85,7 @@ export default {
     },
   },
   created() {
-    this.fetchData();
+    JSON.parse(localStorage.getItem('my-paymentsList')) ?? this.fetchData();
     this.fetchCategory();
   }
 };
