@@ -60,7 +60,7 @@ export default {
         id: ++idNum,
         date: this.date || this.getCurrentDate,
         category: this.selectCategory,
-        value: this.value,
+        value: +(this.value).toFixed(2),
       };
       if (data.category && data.value >= 0) {
         this.message = "Added";
