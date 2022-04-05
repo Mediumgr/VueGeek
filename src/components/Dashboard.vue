@@ -32,9 +32,7 @@
         />
       </transition-group>
     </div>
-    <vue-chart-container
-        :items="paymentsList"
-        :categories="categories">
+    <vue-chart-container :items="paymentsList" :categories="categories">
     </vue-chart-container>
   </div>
 </template>
@@ -50,14 +48,14 @@ export default {
     AddPayment: () => import("@/components/AddPayment.vue"),
     PagesPagination: () => import("@/components/PagesPagination.vue"),
     PutCategory: () => import("@/components/PutCategory.vue"),
-    VueChartContainer: () => import("@/components/VueChartContainer.vue"),
+    VueChartContainer: () => import("@/components/VueChartContainer.vue")
   },
   data() {
     return {
       page: "",
       currentPage: 1,
       displayedItems: 3,
-      categoryTransfer: "",
+      categoryTransfer: ""
     };
   },
   methods: {
@@ -67,7 +65,7 @@ export default {
     },
     categoryOption(category) {
       this.categoryTransfer = category;
-    },
+    }
   },
   computed: {
     ...mapGetters({
@@ -87,7 +85,10 @@ export default {
   created() {
     JSON.parse(localStorage.getItem('my-paymentsList')) ?? this.fetchData();
     this.fetchCategory();
-  }
+  },
+  /* async  mounted() {
+    this.currency = await this.$store.dispatch('fetchCurrency')
+  } */
 };
 </script>
 

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
+import dateFilter from '@/filters/date.filter'
 
 Vue.config.productionTip = false
 
@@ -11,6 +12,7 @@ import router from './router'
 Vue.config.productionTip = false
 Vue.use(context)
 Vue.use(modal)
+Vue.filter('date', dateFilter)
 
 new Vue({
   render: h => h(App),

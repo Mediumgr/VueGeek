@@ -12,20 +12,16 @@
     </div>
     <transition appear name="fade">
       <div v-show="hide" class="display">
+        <input v-model="date" type="date" placeholder="Date" class="input testJest" />
         <input
-          v-model="date"
-          placeholder="Date"
-          class="input testJest"
-        />
-        <input
-          v-model.trim="category"
+          v-model="category"
           placeholder="Category"
           class="input testJest2"
         />
         <input
           v-model.number="value"
           type="number"
-          placeholder="Amount"
+          placeholder="Amount in ₽ only"
           class="input testJest3"
         />
         <button
@@ -41,12 +37,11 @@
 </template>
 
 <script>
-
 export default {
   name: "AddPayment",
   props: {
     selectCategory: String,
-    length: Number,
+    length: Number
   },
   data() {
     return {
@@ -55,31 +50,33 @@ export default {
       category: "",
       value: null,
       hide: false,
-      id: 0,
+      id: 0
     };
   },
   methods: {
     onClick() {
       let idNum = this.length;
       const data = {
+        id: ++idNum,
         date: this.date || this.getCurrentDate,
         category: this.selectCategory,
         value: this.value,
-        id: ++idNum,
       };
       if (data.category && data.value >= 0) {
         this.message = "Added";
         this.$store.commit("addDataToPaymentsList", data);
+        this.value = null;
+        this.date = "";
         setTimeout(() => {
           this.message = "Add";
         }, 2500);
       }
       if (this.$attrs.property) {
         const data = {
+          id: this.$attrs.property.editedItem.id,
           date: this.date,
           category: this.category,
           value: this.value,
-          id: this.$attrs.property.editedItem.id,
         };
         this.$store.commit("changeDataItemPaymentsList", data);
         this.$modal.hide();
@@ -97,11 +94,17 @@ export default {
       return `${d}.${m}.${y}`;
     },
   },
-   created() {
-    if (this.$route.name === "AddPaymentOpen" || this.$route.query.data === "edit") {
+  created() {
+    if (
+      this.$route.name === "AddPaymentOpen" ||
+      this.$route.query.data === "edit"
+    ) {
       this.hide = true;
     }
-    if (this.$route.name === "AddPayment" && this.$route.params.categoryId !== "") {
+    if (
+      this.$route.name === "AddPayment" &&
+      this.$route.params.categoryId !== ""
+    ) {
       this.hide = true;
       const categoryRoute = this.$route.params.categoryId;
       this.category = categoryRoute.charAt(0).toUpperCase() + categoryRoute.slice(1);
@@ -135,8 +138,8 @@ export default {
       if (toR.name === "AddPayment" && toR.query.value) {
         this.value = parseInt(toR.query.value);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

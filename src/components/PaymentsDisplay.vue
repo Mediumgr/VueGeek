@@ -12,6 +12,17 @@
       </div>
       <div class="titleValue">
         Amount
+        <div class="flexBtns">
+          <button
+            class="btn"
+            v-for="cur in exchange"
+            :key="cur.currency"
+            @click="onClick(cur)"
+            :class="[{ active: cur.currency === btnCurrency }]"
+          >
+            {{ cur.currency }}
+          </button>
+        </div>
       </div>
     </div>
     <transition-group name="animation" tag="div">
@@ -19,7 +30,7 @@
         <div class="idx">{{ item.id }}</div>
         <div class="element">{{ item.date }}</div>
         <div class="element category">{{ item.category }}</div>
-        <div class="element">{{ item.value }}</div>
+        <div class="element">{{ item.value }} {{btnCurrency}}</div>
         <div class="contextMenu" @click="contextMenuClick($event, item)">
           <img src="../assets/solid.svg" alt="..." />
         </div>
@@ -29,7 +40,7 @@
       Список пуст
     </div>
     <div class="total-block">
-      <div class="total">Total: {{ total }}</div>
+      <div class="total">Total: {{ total.toFixed(2) }} {{btnCurrency}}</div>
     </div>
   </div>
 </template>
@@ -48,14 +59,34 @@ export default {
     },
     total: {
       type: Number,
-      default: 0
-    }
+      default: 0,
+    },
+  },
+  data() {
+    return {
+      exchange: [
+        { currency: "€"},
+        { currency: "$"},
+        { currency: "₽"},
+      ],
+      btnCurrency: "₽",
+    };
   },
   methods: {
     contextMenuClick(event, item) {
       const items = [
-        { text: "Edit", src: "edit.svg", action: function() { this.actionEdit(item) }.bind(this) },
-        { text: "Delete", src: "trash.svg", action: () => this.actionDelete(item)},
+        {
+          text: "Edit",
+          src: "edit.svg",
+          action: function() {
+            this.actionEdit(item);
+          }.bind(this),
+        },
+        {
+          text: "Delete",
+          src: "trash.svg",
+          action: () => this.actionDelete(item),
+        },
       ];
       this.$context.show({ event, items });
     },
@@ -69,20 +100,24 @@ export default {
       this.$store.commit("deleteItem", item);
       this.$context.close();
     },
+    onClick(value) {
+      this.btnCurrency = value.currency;
+      this.$store.commit('exchangeCurrency', this.btnCurrency)
+    },
   },
   watch: {
     length() {
       if (this.length % 3 === 0) {
         let num = this.length / 3; // выводим по 3 элемента на каждой странице
-        this.$emit('current-page', num);
+        this.$emit("current-page", num);
       }
       if (this.length % 3 === 1) {
         let num = Math.floor(this.length / 3) + 1;
-        this.$router.push({ name: 'PagesPagination', params: { id: num } });
-        this.$emit('current-page', num);
+        this.$router.push({ name: "PagesPagination", params: { id: num } });
+        this.$emit("current-page", num);
       }
     },
-  },
+  }
 };
 </script>
 
@@ -173,7 +208,7 @@ export default {
   text-transform: uppercase;
   color: red;
   font-size: 19px;
-  flex-basis: 30%
+  flex-basis: 30%;
 }
 
 .total-block {
@@ -185,6 +220,24 @@ export default {
 .contextMenu {
   width: 4.6px;
   cursor: pointer;
+}
+
+.flexBtns {
+  display: flex;
+  flex-wrap: wrap;
+}
+.btn {
+  width: 18px;
+  height: 16px;
+  margin: 0 1px;
+  background: rgb(55, 202, 221);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: 1.5s;
+}
+.active {
+  background: rgb(230, 2, 199);
 }
 
 .animation-enter-active {

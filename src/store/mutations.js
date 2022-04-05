@@ -20,7 +20,7 @@ export default {
         });
         state.paymentsList = [...state.paymentsList]
         localStorage.setItem('my-paymentsList', JSON.stringify(state.paymentsList))
-        },
+    },
     setCategoryList(state, payload) {
         state.categoryList = payload
     },
@@ -29,5 +29,29 @@ export default {
     },
     addDataToForm(state, payload) {
         state.categoryList.push(payload)
+    },
+    exchangeCurrency(state, payload) {
+        let allValues = []
+        JSON.parse(localStorage.getItem('my-paymentsList')).forEach((item) => {
+            allValues.push(item.value)
+        })
+
+        if (payload === '€') {
+            const euroInRouble = 0.011;
+            state.paymentsList.forEach((item, index) => {
+                item.value = +(allValues[index] * euroInRouble).toFixed(2)
+            })
+        }
+        if (payload === '$') {
+            const dollarInRouble = 0.012
+            state.paymentsList.forEach((item, index) => {
+               item.value = +(allValues[index] * dollarInRouble).toFixed(2)
+            })
+        }
+        if (payload === '₽') {
+            state.paymentsList.forEach((item, index) => {
+                item.value = +(allValues[index])
+            })
+        }
     }
 }

@@ -1,6 +1,7 @@
 <template>
   <div>
     <div id="app" v-if="showIt" :class="[substrate ? styleActive : '']">
+      <div class="date">{{ date | date('datetime') }}</div>
       <header>
         <transition appear name="fadeName">
           <h1>My personal cost</h1>
@@ -35,6 +36,8 @@ export default {
       showIt: true,
       substrate: false,
       styleActive: "active",
+      interval: null,
+      date: new Date(),
     };
   },
   methods: {
@@ -57,10 +60,14 @@ export default {
   mounted() {
     this.$modal.EventBus.$on("shown", this.onShown);
     this.$modal.EventBus.$on("hide", this.onHide);
+    this.interval = setInterval(() => {
+      this.date = new Date()
+    }, 1000)
   },
   beforeDestroy() {
     this.$modal.EventBus.$off("shown", this.onShown);
     this.$modal.EventBus.$off("hide", this.onHide);
+    clearInterval(this.interval)
   },
 };
 </script>
@@ -72,8 +79,16 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   padding-left: 20px;
-  padding-top: 20px;
+  padding-top: 16px;
   margin: 0 auto;
+}
+
+.date {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 20px 0 0;
+  color: rgb(55, 202, 221);
+  font-weight: 700;
 }
 
 .active {
