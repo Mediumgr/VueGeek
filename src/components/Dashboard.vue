@@ -32,8 +32,8 @@
         />
       </transition-group>
     </div>
-    <vue-chart-container :items="paymentsList" :categories="categories">
-    </vue-chart-container>
+    <vue-chart v-if="categories.length" :items="paymentsList" :categories="categories">
+    </vue-chart>
   </div>
 </template>
 
@@ -48,7 +48,7 @@ export default {
     AddPayment: () => import("@/components/AddPayment.vue"),
     PagesPagination: () => import("@/components/PagesPagination.vue"),
     PutCategory: () => import("@/components/PutCategory.vue"),
-    VueChartContainer: () => import("@/components/VueChartContainer.vue")
+    VueChart: () => import("@/components/VueChart.vue")
   },
   data() {
     return {

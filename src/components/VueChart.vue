@@ -1,28 +1,29 @@
-<div>
-    <canvas ref="canvas" id="myChart"></canvas>
-</div>
+<template>
+  <div class="container">
+    <canvas ref="canvas" id="myChart" width="500" height="500"></canvas>
+  </div>
+</template>
 
 <script>
 import { Doughnut } from "vue-chartjs";
 
 export default {
-  name: "VueChart",
-  extends: Doughnut,
+ name: "VueChart",
+ extends: Doughnut,
+  data: () => ({
+    options: { maintainAspectRatio: true },
+  }),
   props: {
-    options: {
-      type: Object,
-      default: null,
-    },
-    paymentsList: {
+    items: {
       type: Array,
-      default: () => [],
+      default: null,
     },
     categories: {
       type: Array,
-      default: () => [],
-    }
+      default: null,
+    },
   },
-  methods: {
+    methods: {
     render() {
       this.renderChart(
         {
@@ -31,7 +32,7 @@ export default {
             {
               label: "expenses by category",
               data: this.categories.map((category) => {
-                return this.paymentsList.reduce((total, element) => {
+                return this.items.reduce((total, element) => {
                   if (element.category === category) {
                     total += element.value;
                   }
@@ -64,7 +65,7 @@ export default {
       );
     },
     labels() {
-      if (this.paymentsList.length) {
+      if (this.items.length) {
         return this.categories
       }
     },
@@ -76,10 +77,16 @@ export default {
     this.render();
   },
   watch: {
-    paymentsList: {
+    items: {
       handler: "getValue",
       deep: true,
     },
   },
 };
 </script>
+
+<style scoped>
+.container {
+  padding: 0 120px 0 300px;
+}
+</style>

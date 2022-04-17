@@ -18,6 +18,15 @@
       </transition>
     </div>
     <page404 v-else />
+    <div class="bottom">
+      <div class="year">
+        &copy;{{ new Date().getFullYear() }}
+      </div>
+      <a href="https://github.com/Mediumgr" target="blank">
+        <span class="myName">Ruslan Guseinov</span>
+        <img :src="require('/src/assets/github.jpg')" alt="github" class="github" />
+      </a>
+    </div>
   </div>
 </template>
 
@@ -73,6 +82,10 @@ export default {
 </script>
 
 <style scoped>
+a {
+  text-decoration: none;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -81,6 +94,8 @@ export default {
   padding-left: 20px;
   padding-top: 16px;
   margin: 0 auto;
+  box-sizing: border-box;
+  height: 96vh;
 }
 
 .date {
@@ -94,7 +109,36 @@ export default {
 .active {
   background: linear-gradient(to top left, powderblue, pink);
   z-index: 1;
-  height: 97vh;
+  height: 100vh;
+}
+
+.bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 210px;
+    margin: 0 auto;
+}
+
+.myName {
+  color: rgb(55, 202, 221);
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.year {
+  position: relative;
+  top: 2px;
+  color: rgb(55, 202, 221);
+    font-weight: 800;
+}
+
+.github {
+  position: relative;
+  top: 2px;
+  padding-left: 14px;
+  width: 19px;
+  height: 19px;
 }
 
 .fade-enter-active,
