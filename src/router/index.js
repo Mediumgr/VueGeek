@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 Vue.use(Router)
+document.title = "My expenses";
 
 let router = new Router({
     mode: 'history',
@@ -29,7 +30,7 @@ let router = new Router({
             path: '*',
             name: 'NotFound',
             component: () => import('../components/Page404.vue')
-        }
+        },
     ]
 })
 

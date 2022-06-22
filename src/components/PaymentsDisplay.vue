@@ -14,11 +14,10 @@
         Amount
         <div class="flexBtns">
           <button
-            class="btn"
             v-for="cur in exchange"
             :key="cur.currency"
             @click="onClick(cur)"
-            :class="[{ active: cur.currency === btnCurrency }]"
+            :class="['btn', { active: cur.currency === btnCurrency }]"
           >
             {{ cur.currency }}
           </button>
@@ -124,6 +123,7 @@ export default {
 <style scoped>
 .payments-list {
   margin-left: 0;
+  height: 314px;
 }
 
 .elements {

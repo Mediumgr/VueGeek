@@ -12,7 +12,12 @@
     </div>
     <transition appear name="fade">
       <div v-show="hide" class="display">
-        <input v-model="date" type="date" placeholder="Date" class="input testJest" />
+        <input
+          v-model="date"
+          type="date"
+          placeholder="Date"
+          class="input testJest"
+        />
         <input
           v-model="category"
           placeholder="Category"
@@ -41,7 +46,7 @@ export default {
   name: "AddPayment",
   props: {
     selectCategory: String,
-    length: Number
+    length: Number,
   },
   data() {
     return {
@@ -50,7 +55,7 @@ export default {
       category: "",
       value: null,
       hide: false,
-      id: 0
+      id: 0,
     };
   },
   methods: {
@@ -60,7 +65,7 @@ export default {
         id: ++idNum,
         date: this.date || this.getCurrentDate,
         category: this.selectCategory,
-        value: +(this.value).toFixed(2),
+        value: +this.value.toFixed(2),
       };
       if (data.category && data.value >= 0) {
         this.message = "Added";
@@ -107,7 +112,8 @@ export default {
     ) {
       this.hide = true;
       const categoryRoute = this.$route.params.categoryId;
-      this.category = categoryRoute.charAt(0).toUpperCase() + categoryRoute.slice(1);
+      this.category =
+        categoryRoute.charAt(0).toUpperCase() + categoryRoute.slice(1);
       this.$emit("add-to-category-select", this.category);
     }
     if (this.$route.name === "AddPayment" && this.$route.query.value) {
@@ -132,7 +138,8 @@ export default {
       if (toR.name === "AddPayment" && toR.params.categoryId) {
         this.hide = true;
         const categoryRoute = this.$route.params.categoryId;
-        this.category = categoryRoute.charAt(0).toUpperCase() + categoryRoute.slice(1);
+        this.category =
+          categoryRoute.charAt(0).toUpperCase() + categoryRoute.slice(1);
         this.$emit("add-to-category-select", this.category);
       }
       if (toR.name === "AddPayment" && toR.query.value) {

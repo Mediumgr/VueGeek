@@ -9,7 +9,6 @@ import modal from './plugins/ModalWindow'
 import store from './store'
 import router from './router'
 
-Vue.config.productionTip = false
 Vue.use(context)
 Vue.use(modal)
 Vue.filter('date', dateFilter)

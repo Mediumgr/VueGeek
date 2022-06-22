@@ -1,11 +1,12 @@
 <template>
   <div class="container">
-    <canvas ref="canvas" id="myChart" width="500" height="500"></canvas>
+    <canvas ref="canvas" id="myChart" width="425" height="425"></canvas>
   </div>
 </template>
 
 <script>
 import { Doughnut } from "vue-chartjs";
+import { mapGetters } from 'vuex';
 
 export default {
  name: "VueChart",
@@ -14,25 +15,21 @@ export default {
     options: { maintainAspectRatio: true },
   }),
   props: {
-    items: {
+    paymentsList: {
       type: Array,
-      default: null,
-    },
-    categories: {
-      type: Array,
-      default: null,
+      default: () => [],
     },
   },
     methods: {
     render() {
       this.renderChart(
         {
-          labels: this.labels(),
+          labels: this.getCategoryList,
           datasets: [
             {
               label: "expenses by category",
-              data: this.categories.map((category) => {
-                return this.items.reduce((total, element) => {
+              data: this.getCategoryList.map((category) => {
+                return this.paymentsList.reduce((total, element) => {
                   if (element.category === category) {
                     total += element.value;
                   }
@@ -64,20 +61,18 @@ export default {
         this.options
       );
     },
-    labels() {
-      if (this.items.length) {
-        return this.categories
-      }
-    },
     getValue(newValue) {
       this.render(newValue);
     },
+  },
+  computed: {
+    ...mapGetters(["getCategoryList"]),
   },
   mounted() {
     this.render();
   },
   watch: {
-    items: {
+    paymentsList: {
       handler: "getValue",
       deep: true,
     },
@@ -87,6 +82,6 @@ export default {
 
 <style scoped>
 .container {
-  padding: 0 120px 0 300px;
+  padding: 0 120px 0 100px;
 }
 </style>

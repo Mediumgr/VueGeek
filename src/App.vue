@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="app" v-if="showIt" :class="[substrate ? styleActive : '']">
-      <div class="date">{{ date | date('datetime') }}</div>
+      <div class="date">{{ date | date("datetime") }}</div>
       <header>
         <transition appear name="fadeName">
           <h1>My personal cost</h1>
@@ -16,17 +16,19 @@
       <transition name="fade">
         <modal-window v-if="modalSettings.name" :settings="modalSettings" />
       </transition>
+      <div class="bottom">
+        <div class="year">&copy;{{ new Date().getFullYear() }}</div>
+        <a href="https://github.com/Mediumgr" target="blank">
+          <span class="myName">Ruslan Guseinov</span>
+          <img
+            :src="require('/src/assets/logo.png')"
+            alt="github"
+            class="github"
+          />
+        </a>
+      </div>
     </div>
     <page404 v-else />
-    <div class="bottom">
-      <div class="year">
-        &copy;{{ new Date().getFullYear() }}
-      </div>
-      <a href="https://github.com/Mediumgr" target="blank">
-        <span class="myName">Ruslan Guseinov</span>
-        <img :src="require('/src/assets/github.jpg')" alt="github" class="github" />
-      </a>
-    </div>
   </div>
 </template>
 
@@ -60,8 +62,8 @@ export default {
     },
   },
   watch: {
-    $route(toR) {
-      if (toR.name === "NotFound") {
+    $route(to) {
+      if (to.name === "NotFound") {
         this.showIt = false;
       }
     },
@@ -70,13 +72,13 @@ export default {
     this.$modal.EventBus.$on("shown", this.onShown);
     this.$modal.EventBus.$on("hide", this.onHide);
     this.interval = setInterval(() => {
-      this.date = new Date()
-    }, 1000)
+      this.date = new Date();
+    }, 1000);
   },
   beforeDestroy() {
     this.$modal.EventBus.$off("shown", this.onShown);
     this.$modal.EventBus.$off("hide", this.onHide);
-    clearInterval(this.interval)
+    clearInterval(this.interval);
   },
 };
 </script>
@@ -95,7 +97,6 @@ a {
   padding-top: 16px;
   margin: 0 auto;
   box-sizing: border-box;
-  height: 96vh;
 }
 
 .date {
@@ -107,17 +108,21 @@ a {
 }
 
 .active {
-  background: linear-gradient(to top left, powderblue, pink);
-  z-index: 1;
-  height: 100vh;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 210px;
-    margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  left: 45%;
 }
 
 .myName {
@@ -127,10 +132,9 @@ a {
 }
 
 .year {
-  position: relative;
-  top: 2px;
   color: rgb(55, 202, 221);
-    font-weight: 800;
+  font-weight: 800;
+  margin-right: 10px;
 }
 
 .github {

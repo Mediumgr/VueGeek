@@ -27,8 +27,8 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-.wrapper {
+<style scoped>
+.wrapper {  
   width: 45%;
   padding: 20px;
   background: #62a0bd;
@@ -41,13 +41,15 @@ export default {
 
 .close {
   background: rgb(230, 2, 199);
+  width: 75px;
   color: white;
   position: absolute;
   right: 21px;
   transition: 1.5s;
   cursor: pointer;
-  padding: 5px;
-  border-radius: 10%;
+  padding: 6px;
+  border: none;
+  outline: none;
 }
 
 .close:hover {

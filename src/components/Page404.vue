@@ -1,7 +1,10 @@
 <template>
   <div class="container">
     <div class="error">
-      Ошибка 404. Такая страница не найдена.
+      Ошибка 404.
+      <div class="error_info">
+        Такая страница не существует.
+      </div>
     </div>
   </div>
 </template>
@@ -21,8 +24,9 @@ export default {
 }
 .error {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   background: #d36378;
   font-size: 26px;
   width: 50%;

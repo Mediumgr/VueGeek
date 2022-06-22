@@ -54,9 +54,13 @@ export default {
   created() {
     if (this.$route.params.id) {
       const page = +this.$route.params.id;
-      this.$emit("current-page", page);
+      if (page <= this.amount) {
+        this.$emit("current-page", page);
+      } else {
+        this.$router.push({ name: "NotFound", params: { '0': this.$route.path } });
+      }
     }
-  }
+  },
 };
 </script>
 

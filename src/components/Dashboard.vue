@@ -1,6 +1,6 @@
 <template>
   <div class="flexDash">
-    <div class="group">
+    <div class="group" v-if="paymentsList.length !== 0">
       <transition-group appear name="fade">
         <add-payment
           :selectCategory="selectCategory"
@@ -32,7 +32,11 @@
         />
       </transition-group>
     </div>
-    <vue-chart v-if="categories.length" :items="paymentsList" :categories="categories">
+    <div v-else class="deletedPaymentsList">Вы удалили все данные. Обновите страницу, чтобы создать шаблон затрат</div>
+    <vue-chart
+      v-if="categories.length !== 0"
+      :paymentsList="paymentsList"
+    >
     </vue-chart>
   </div>
 </template>
@@ -48,14 +52,14 @@ export default {
     AddPayment: () => import("@/components/AddPayment.vue"),
     PagesPagination: () => import("@/components/PagesPagination.vue"),
     PutCategory: () => import("@/components/PutCategory.vue"),
-    VueChart: () => import("@/components/VueChart.vue")
+    VueChart: () => import("@/components/VueChart.vue"),
   },
   data() {
     return {
       page: "",
       currentPage: 1,
       displayedItems: 3,
-      categoryTransfer: ""
+      categoryTransfer: "",
     };
   },
   methods: {
@@ -65,7 +69,7 @@ export default {
     },
     categoryOption(category) {
       this.categoryTransfer = category;
-    }
+    },
   },
   computed: {
     ...mapGetters({
@@ -83,12 +87,24 @@ export default {
     },
   },
   created() {
-    JSON.parse(localStorage.getItem('my-paymentsList')) ?? this.fetchData();
-    this.fetchCategory();
+    if (
+      localStorage.getItem("my-paymentsList") !== null &&
+      this.paymentsList.length !== 0
+    ) {
+      let existedPaymentsList = JSON.parse(
+        localStorage.getItem("my-paymentsList")
+      );
+      this.$store.commit("getExistedPaymentsList", existedPaymentsList);
+      let existedCategory = [];
+      JSON.parse(localStorage.getItem("my-paymentsList")).forEach((element) => {
+        existedCategory.push(element.category);
+      });
+      this.$store.commit("myCategoryList", existedCategory);
+    } else {
+      this.fetchData();
+      this.fetchCategory();
+    }
   },
-  /* async  mounted() {
-    this.currency = await this.$store.dispatch('fetchCurrency')
-  } */
 };
 </script>
 
@@ -114,5 +130,11 @@ export default {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+.deletedPaymentsList {
+  margin: 200px auto;
+  font-size: 19px;
+  color: red;
+  font-weight: bold;
 }
 </style>
