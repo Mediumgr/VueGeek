@@ -6,11 +6,11 @@
 
 <script>
 import { Doughnut } from "vue-chartjs";
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
 export default {
- name: "VueChart",
- extends: Doughnut,
+  name: "VueChart",
+  extends: Doughnut,
   data: () => ({
     options: { maintainAspectRatio: true },
   }),
@@ -20,7 +20,7 @@ export default {
       default: () => [],
     },
   },
-    methods: {
+  methods: {
     render() {
       this.renderChart(
         {

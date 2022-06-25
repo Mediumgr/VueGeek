@@ -13,13 +13,12 @@
 </template>
 
 <script>
-
 export default {
   name: "PutCategory",
   data() {
     return {
       add: "",
-      message: "Add"
+      message: "Add",
     };
   },
   methods: {
@@ -32,7 +31,7 @@ export default {
         }, 1500);
         this.add = "";
       }
-    }
+    },
   },
 };
 </script>

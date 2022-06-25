@@ -31,7 +31,7 @@ export default {
       if (this.selected) {
         this.$store.commit("addSelected", this.selected);
       }
-    }
+    },
   },
   created() {
     if (this.categoryTransfer) {

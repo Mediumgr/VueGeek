@@ -1,6 +1,6 @@
 <template>
   <div class="flexDash">
-    <div class="group" v-if="paymentsList.length !== 0">
+    <div class="group" v-if="paymentsList.length !== 0 && loading === false">
       <transition-group appear name="fade">
         <add-payment
           :selectCategory="selectCategory"
@@ -32,9 +32,20 @@
         />
       </transition-group>
     </div>
-    <div v-else class="deletedPaymentsList">Вы удалили все данные. Обновите страницу, чтобы создать шаблон затрат</div>
+    <div
+      v-else-if="paymentsList.length === 0 && loading === true"
+      class="deletedPaymentsList"
+    >
+      Loading...
+    </div>
+    <div
+      v-if="paymentsList.length === 0 && loading === false"
+      class="deletedPaymentsList"
+    >
+      Вы удалили все данные. Обновите страницу, чтобы создать шаблон затрат
+    </div>
     <vue-chart
-      v-if="categories.length !== 0"
+      v-if="paymentsList.length !== 0 && loading === false"
       :paymentsList="paymentsList"
     >
     </vue-chart>
@@ -60,6 +71,7 @@ export default {
       currentPage: 1,
       displayedItems: 3,
       categoryTransfer: "",
+      loading: false,
     };
   },
   methods: {
@@ -101,8 +113,11 @@ export default {
       });
       this.$store.commit("myCategoryList", existedCategory);
     } else {
-      this.fetchData();
+      this.loading = true
       this.fetchCategory();
+      this.fetchData().then(() => {
+        this.loading = false;
+      })
     }
   },
 };

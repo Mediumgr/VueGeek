@@ -7,5 +7,5 @@ export default {
 
     getCategoryList: state => state.categoryList,
 
-    addSelectedToList: state => state.selectOption
+    addSelectedToList: state => state.selectOption,
 }

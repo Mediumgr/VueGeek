@@ -29,7 +29,7 @@
         <div class="idx">{{ item.id }}</div>
         <div class="element">{{ item.date }}</div>
         <div class="element category">{{ item.category }}</div>
-        <div class="element">{{ item.value }} {{btnCurrency}}</div>
+        <div class="element">{{ item.value }} {{ btnCurrency }}</div>
         <div class="contextMenu" @click="contextMenuClick($event, item)">
           <img src="../assets/solid.svg" alt="..." />
         </div>
@@ -39,7 +39,7 @@
       Список пуст
     </div>
     <div class="total-block">
-      <div class="total">Total: {{ total.toFixed(2) }} {{btnCurrency}}</div>
+      <div class="total">Total: {{ total.toFixed(2) }} {{ btnCurrency }}</div>
     </div>
   </div>
 </template>
@@ -63,11 +63,7 @@ export default {
   },
   data() {
     return {
-      exchange: [
-        { currency: "€"},
-        { currency: "$"},
-        { currency: "₽"},
-      ],
+      exchange: [{ currency: "€" }, { currency: "$" }, { currency: "₽" }],
       btnCurrency: "₽",
     };
   },
@@ -101,7 +97,7 @@ export default {
     },
     onClick(value) {
       this.btnCurrency = value.currency;
-      this.$store.commit('exchangeCurrency', this.btnCurrency)
+      this.$store.commit("exchangeCurrency", this.btnCurrency);
     },
   },
   watch: {
@@ -116,7 +112,7 @@ export default {
         this.$emit("current-page", num);
       }
     },
-  }
+  },
 };
 </script>
 
