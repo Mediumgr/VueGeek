@@ -1,2 +1,2 @@
-# VueGeek
-My Homeworks
+# Expensis App
+Ваши затраты у себя в браузере
