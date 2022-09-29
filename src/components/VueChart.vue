@@ -61,9 +61,9 @@ export default {
         this.options
       );
     },
-    getValue(newValue) {
+    /*     getValue(newValue) {
       this.render(newValue);
-    },
+    }, */
   },
   computed: {
     ...mapGetters(["getCategoryList"]),
@@ -73,7 +73,11 @@ export default {
   },
   watch: {
     paymentsList: {
-      handler: "getValue",
+      /* handler: "getValue",
+      deep: true, */
+      handler(newValue) {
+        this.render(newValue);
+      },
       deep: true,
     },
   },
@@ -82,6 +86,6 @@ export default {
 
 <style scoped>
 .container {
-  padding: 0 120px 0 100px;
+  padding: 50px 190px 0 100px;
 }
 </style>
